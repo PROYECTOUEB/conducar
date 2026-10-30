@@ -15,5 +15,6 @@
       "askForPassword": true,
       "previewLimit": 50
     }
-  ]
+  ],
+  "java.compile.nullAnalysis.mode": "automatic"
 }
