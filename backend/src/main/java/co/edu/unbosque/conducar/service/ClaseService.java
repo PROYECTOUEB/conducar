@@ -7,11 +7,11 @@ import co.edu.unbosque.conducar.repository.ClaseRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-/** Reglas de negocio de la agenda de clases. */
+
 @Service
 public class ClaseService {
 
-    /** Valores permitidos por los CHECK de las tablas MODULO y CLASE. */
+    
     public static final List<String> TIPOS = List.of("TEORIA", "TALLER", "PRACTICA");
     public static final List<String> ESTADOS = List.of("PROGRAMADA", "DICTADA", "CANCELADA");
 

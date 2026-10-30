@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Acceso a datos de INSTRUCTOR e INSTRUCTOR_CATEGORIA. */
+
 @Repository
 public class InstructorRepository {
 
@@ -41,7 +41,7 @@ public class InstructorRepository {
         return jdbc.query(sql, p, new DataClassRowMapper<>(InstructorResumen.class));
     }
 
-    /** Categorías que enseña cada instructor: lista de pares (id_instructor, codigo_categoria). */
+    
     public List<Map<String, Object>> categorias() {
         String sql = """
                 SELECT id_instructor, codigo_categoria
@@ -51,7 +51,7 @@ public class InstructorRepository {
         return jdbc.queryForList(sql, new MapSqlParameterSource());
     }
 
-    /** Instructores para los filtros de la interfaz. */
+    
     public List<InstructorOpcion> opciones() {
         String sql = """
                 SELECT id_instructor, CONCAT(nombres, ' ', apellidos) AS nombre

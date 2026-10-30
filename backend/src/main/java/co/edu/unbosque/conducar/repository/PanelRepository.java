@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Consultas de resumen para el panel. */
+
 @Repository
 public class PanelRepository {
 
@@ -40,7 +40,7 @@ public class PanelRepository {
         return jdbc.queryForObject(sql, new MapSqlParameterSource(), new DataClassRowMapper<>(Indicadores.class));
     }
 
-    /** Alertas: varias consultas unidas con UNION ALL y ordenadas por prioridad y fecha. */
+    
     public List<Alerta> alertas(LocalDate hoy, LocalDate en30, LocalDate en60) {
         String sql = """
                 SELECT tipo, sujeto, detalle, fecha, nivel, enlace FROM (

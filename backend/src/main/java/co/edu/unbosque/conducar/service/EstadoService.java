@@ -4,7 +4,7 @@ import co.edu.unbosque.conducar.model.estado.EstadoConexion;
 import co.edu.unbosque.conducar.repository.EstadoRepository;
 import org.springframework.stereotype.Service;
 
-/** Verifica la conexión con MySQL. */
+
 @Service
 public class EstadoService {
 

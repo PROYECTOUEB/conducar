@@ -16,7 +16,7 @@ import java.util.List;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-/** Consultas SQL de ejemplo (archivo consultas.json) y su ejecución sobre MySQL. */
+
 @Service
 public class ConsultaService {
 

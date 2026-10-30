@@ -5,7 +5,7 @@ import co.edu.unbosque.conducar.repository.InstructorRepository;
 import co.edu.unbosque.conducar.repository.VehiculoRepository;
 import org.springframework.stereotype.Service;
 
-/** Valores para los filtros de la interfaz. */
+
 @Service
 public class CatalogoService {
 

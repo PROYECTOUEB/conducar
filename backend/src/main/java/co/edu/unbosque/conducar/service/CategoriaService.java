@@ -6,7 +6,7 @@ import co.edu.unbosque.conducar.repository.CategoriaRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-/** Categorías de licencia con el plan de estudios de cada curso. */
+
 @Service
 public class CategoriaService {
 

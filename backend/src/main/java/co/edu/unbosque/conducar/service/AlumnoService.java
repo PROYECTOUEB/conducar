@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-/** Reglas de negocio de los alumnos. */
+
 @Service
 public class AlumnoService {
 
