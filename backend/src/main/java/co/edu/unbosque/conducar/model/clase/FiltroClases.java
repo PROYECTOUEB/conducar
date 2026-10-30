@@ -2,7 +2,7 @@ package co.edu.unbosque.conducar.model.clase;
 
 import java.time.LocalDate;
 
-/** Filtros opcionales de la agenda de clases. */
+
 public record FiltroClases(
         String estado,
         String tipo,

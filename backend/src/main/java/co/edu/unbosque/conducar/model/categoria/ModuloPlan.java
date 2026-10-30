@@ -1,6 +1,6 @@
 package co.edu.unbosque.conducar.model.categoria;
 
-/** Módulo (materia) del plan de estudios de una categoría. */
+
 public record ModuloPlan(
         String codigoCategoria,
         Integer idModulo,

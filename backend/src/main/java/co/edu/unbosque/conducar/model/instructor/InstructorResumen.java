@@ -2,7 +2,7 @@ package co.edu.unbosque.conducar.model.instructor;
 
 import java.time.LocalDate;
 
-/** Instructor con su licencia, categorías y horas dictadas. */
+
 public record InstructorResumen(
         Integer idInstructor,
         String numeroDocumento,

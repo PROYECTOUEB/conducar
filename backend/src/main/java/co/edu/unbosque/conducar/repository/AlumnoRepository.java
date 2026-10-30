@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Acceso a datos de ALUMNO y sus certificados, matrículas, exámenes y pagos. */
+
 @Repository
 public class AlumnoRepository {
 
@@ -23,7 +23,7 @@ public class AlumnoRepository {
         this.jdbc = jdbc;
     }
 
-    /** Lista de alumnos; si se envía texto, filtra por nombre, apellido o documento. */
+    
     public List<AlumnoResumen> buscar(String texto) {
         MapSqlParameterSource p = new MapSqlParameterSource();
         String filtro = "";
@@ -70,7 +70,7 @@ public class AlumnoRepository {
         return jdbc.query(sql, new MapSqlParameterSource("id", id), new DataClassRowMapper<>(CertificadoCrc.class));
     }
 
-    /** Matrículas con lo pagado y las horas dictadas frente a las del plan, por tipo de clase. */
+    
     public List<MatriculaAvance> matriculas(int id) {
         String sql = """
                 SELECT m.id_matricula, m.codigo_categoria, c.descripcion, m.fecha_matricula, m.estado, m.valor_pactado,

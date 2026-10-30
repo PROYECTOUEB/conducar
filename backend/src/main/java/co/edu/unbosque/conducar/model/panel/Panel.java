@@ -3,7 +3,7 @@ package co.edu.unbosque.conducar.model.panel;
 import co.edu.unbosque.conducar.model.clase.ClaseResumen;
 import java.util.List;
 
-/** Respuesta completa del panel. */
+
 public record Panel(
         Indicadores kpi,
         List<Alerta> alertas,
