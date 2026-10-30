@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 
-/** Reglas de negocio de los instructores. */
+
 @Service
 public class InstructorService {
 
@@ -17,7 +17,7 @@ public class InstructorService {
         this.instructorRepository = instructorRepository;
     }
 
-    /** Instructores con el estado de su licencia (vencida, por vencer en 60 días o vigente) y sus categorías. */
+    
     public List<InstructorResumen> listar() {
         LocalDate hoy = LocalDate.now();
         Map<Integer, String> categorias = Agrupador.agrupar(instructorRepository.categorias(), "id_instructor", "codigo_categoria");

@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Convierte filas (clave, valor) en un mapa clave -> "valor1, valor2, ...". */
+
 final class Agrupador {
 
     private Agrupador() {

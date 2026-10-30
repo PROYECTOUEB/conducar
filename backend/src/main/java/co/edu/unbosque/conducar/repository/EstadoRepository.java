@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Consultas sobre el servidor MySQL y el tamaño de la base de datos. */
+
 @Repository
 public class EstadoRepository {
 
@@ -35,7 +35,7 @@ public class EstadoRepository {
         return n == null ? 0 : n;
     }
 
-    /** Número de registros de las tablas principales. */
+    
     public Map<String, Integer> conteos() {
         String sql = """
                 SELECT (SELECT COUNT(*) FROM alumno) AS alumno,

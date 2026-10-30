@@ -9,11 +9,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Acceso a datos de VEHICULO. */
+
 @Repository
 public class VehiculoRepository {
 
-    /** Vehículo con el estado de sus documentos y su uso en clases. */
+    
     private static final String VEHICULO_BASE = """
             SELECT v.placa, v.codigo_categoria, v.tipo_vehiculo, v.marca, v.linea, v.modelo_anio, v.transmision, v.estado,
                    v.fecha_venc_soat,
@@ -48,7 +48,7 @@ public class VehiculoRepository {
                 .stream().findFirst();
     }
 
-    /** Placas de todos los vehículos (para los filtros). */
+    
     public List<String> placas() {
         return jdbc.queryForList("SELECT placa FROM vehiculo ORDER BY placa", new MapSqlParameterSource(), String.class);
     }

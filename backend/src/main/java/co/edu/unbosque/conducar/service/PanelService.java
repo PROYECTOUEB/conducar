@@ -6,7 +6,7 @@ import co.edu.unbosque.conducar.repository.PanelRepository;
 import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
-/** Arma el panel a partir de varias consultas. */
+
 @Service
 public class PanelService {
 

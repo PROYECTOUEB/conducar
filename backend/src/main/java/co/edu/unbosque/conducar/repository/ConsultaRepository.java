@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Ejecuta las sentencias SQL de los ejercicios de álgebra relacional. */
+
 @Repository
 public class ConsultaRepository {
 
@@ -17,7 +17,7 @@ public class ConsultaRepository {
         this.jdbc = jdbc;
     }
 
-    /** Ejecuta una consulta y devuelve sus columnas y filas (las fechas y horas como texto). */
+    
     public ResultadoTabla ejecutar(String sql) {
         return jdbc.getJdbcTemplate().query(sql, rs -> {
             ResultSetMetaData meta = rs.getMetaData();

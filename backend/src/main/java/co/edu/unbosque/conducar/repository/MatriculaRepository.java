@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Acceso a datos de MATRICULA con sus pagos y horas de clase. */
+
 @Repository
 public class MatriculaRepository {
 
@@ -17,7 +17,7 @@ public class MatriculaRepository {
         this.jdbc = jdbc;
     }
 
-    /** Matrículas; si se envía un estado (ACTIVA, FINALIZADA o CANCELADA), solo las de ese estado. */
+    
     public List<MatriculaResumen> listar(String estado) {
         MapSqlParameterSource p = new MapSqlParameterSource();
         String where = "";

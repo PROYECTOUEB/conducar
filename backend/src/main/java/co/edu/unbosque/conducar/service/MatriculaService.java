@@ -6,7 +6,7 @@ import co.edu.unbosque.conducar.repository.MatriculaRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-/** Matrículas y estado de pagos. */
+
 @Service
 public class MatriculaService {
 

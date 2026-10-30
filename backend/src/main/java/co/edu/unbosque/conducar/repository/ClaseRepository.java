@@ -9,11 +9,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/** Acceso a datos de la tabla CLASE y sus tablas relacionadas. */
+
 @Repository
 public class ClaseRepository {
 
-    /** Consulta base: clase + módulo + matrícula + alumno + instructor. */
+    
     private static final String CLASE_BASE = """
             SELECT cl.id_clase, cl.fecha, cl.hora_inicio, cl.horas, cl.estado, cl.id_modulo, md.tipo, md.nombre AS modulo,
                    m.codigo_categoria, cl.id_matricula, a.id_alumno, CONCAT(a.nombres, ' ', a.apellidos) AS alumno,
@@ -31,7 +31,7 @@ public class ClaseRepository {
         this.jdbc = jdbc;
     }
 
-    /** Agenda de clases con filtros opcionales (máximo 500, de la más reciente a la más antigua). */
+    
     public List<ClaseResumen> buscar(FiltroClases f) {
         List<String> condiciones = new ArrayList<>();
         MapSqlParameterSource p = new MapSqlParameterSource();
@@ -46,19 +46,19 @@ public class ClaseRepository {
         return jdbc.query(sql, p, new DataClassRowMapper<>(ClaseResumen.class));
     }
 
-    /** Próximas clases programadas. */
+    
     public List<ClaseResumen> proximas(int cantidad) {
         String sql = CLASE_BASE + "WHERE cl.estado = 'PROGRAMADA' ORDER BY cl.fecha, cl.hora_inicio LIMIT :cantidad";
         return jdbc.query(sql, new MapSqlParameterSource("cantidad", cantidad), new DataClassRowMapper<>(ClaseResumen.class));
     }
 
-    /** Clases de un alumno (todas sus matrículas). */
+
     public List<ClaseResumen> porAlumno(int idAlumno) {
         String sql = CLASE_BASE + "WHERE a.id_alumno = :id ORDER BY cl.fecha DESC, cl.hora_inicio DESC";
         return jdbc.query(sql, new MapSqlParameterSource("id", idAlumno), new DataClassRowMapper<>(ClaseResumen.class));
     }
 
-    /** Últimas clases en las que se usó un vehículo. */
+    
     public List<ClaseResumen> porVehiculo(String placa, int cantidad) {
         String sql = CLASE_BASE + "WHERE cl.placa = :placa ORDER BY cl.fecha DESC, cl.hora_inicio DESC LIMIT :cantidad";
         MapSqlParameterSource p = new MapSqlParameterSource("placa", placa).addValue("cantidad", cantidad);
