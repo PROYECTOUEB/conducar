@@ -5,14 +5,13 @@ import { VehiculoDetalle } from '../../core/models/vehiculo.model';
 import { VehiculoService } from '../../core/services/vehiculo.service';
 import { ErrorComponent } from '../../shared/components/error.component';
 import { EstadoComponent } from '../../shared/components/estado.component';
-import { LeyendaComponent } from '../../shared/components/leyenda.component';
-import { TiraClaseComponent } from '../../shared/components/tira-clase.component';
+import { TablaClasesComponent } from '../../shared/components/tabla-clases.component';
 import { mensajeError } from '../../shared/formato';
 import { PIPES } from '../../shared/pipes/formato.pipes';
 
 @Component({
   selector: 'app-vehiculo-detalle',
-  imports: [RouterLink, ErrorComponent, EstadoComponent, LeyendaComponent, TiraClaseComponent, PIPES],
+  imports: [RouterLink, ErrorComponent, EstadoComponent, TablaClasesComponent, PIPES],
   templateUrl: './vehiculo-detalle.component.html',
 })
 export class VehiculoDetalleComponent implements OnInit {

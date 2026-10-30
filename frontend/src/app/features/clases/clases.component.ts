@@ -7,14 +7,13 @@ import { ClaseResumen } from '../../core/models/clase.model';
 import { CatalogoService } from '../../core/services/catalogo.service';
 import { ClaseService, FiltroClases } from '../../core/services/clase.service';
 import { ErrorComponent } from '../../shared/components/error.component';
-import { LeyendaComponent } from '../../shared/components/leyenda.component';
-import { TiraClaseComponent } from '../../shared/components/tira-clase.component';
+import { TablaClasesComponent } from '../../shared/components/tabla-clases.component';
 import { mensajeError } from '../../shared/formato';
 import { PIPES } from '../../shared/pipes/formato.pipes';
 
 @Component({
   selector: 'app-clases',
-  imports: [FormsModule, ErrorComponent, LeyendaComponent, TiraClaseComponent, PIPES],
+  imports: [FormsModule, ErrorComponent, TablaClasesComponent, PIPES],
   templateUrl: './clases.component.html',
 })
 export class ClasesComponent implements OnInit {

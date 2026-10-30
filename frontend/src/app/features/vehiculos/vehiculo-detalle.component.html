@@ -25,13 +25,6 @@
 
   <section class="bloque">
     <h2>Últimas clases en este vehículo</h2>
-    <app-leyenda />
-    <div class="tiras">
-      @for (c of detalle.clases; track c.idClase) {
-        <app-tira-clase [clase]="c" />
-      } @empty {
-        <p class="vacio">Este vehículo no tiene clases registradas.</p>
-      }
-    </div>
+    <app-tabla-clases [clases]="detalle.clases" vacio="Este vehículo no tiene clases registradas." />
   </section>
 }
