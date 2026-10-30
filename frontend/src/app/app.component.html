@@ -1,0 +1,20 @@
+<aside class="lateral" [class.abierto]="menuAbierto" id="lateral">
+  <a class="marca" routerLink="/panel" aria-label="ConduLog, ir al panel">
+    <img src="logo.svg" alt="" width="34" height="34">
+    <span>ConduLog</span>
+  </a>
+  <nav aria-label="Secciones">
+    @for (s of secciones; track s.ruta) {
+      <a [routerLink]="s.ruta" routerLinkActive="activo" ariaCurrentWhenActive="page">{{ s.nombre }}</a>
+    }
+  </nav>
+  <a class="conexion" [class.ok]="conexion === 'ok'" [class.error]="conexion === 'error'"
+     routerLink="/estado" routerLinkActive="activo" ariaCurrentWhenActive="page">
+    <span class="punto" aria-hidden="true"></span><span>{{ textoConexion }}</span>
+  </a>
+</aside>
+<button class="menu" type="button" aria-controls="lateral" [attr.aria-expanded]="menuAbierto"
+        (click)="menuAbierto = !menuAbierto">Menú</button>
+<main id="contenido">
+  <router-outlet />
+</main>

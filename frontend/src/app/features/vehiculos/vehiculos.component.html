@@ -1,0 +1,20 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else if (!vehiculos) {
+  <p class="cargando" role="status">Cargando información…</p>
+} @else {
+  <h1>Vehículos de enseñanza</h1>
+  <p class="sub">Flota del centro de enseñanza, su estado y la vigencia del SOAT y de la revisión técnico-mecánica.</p>
+  <div class="colas">
+    @for (v of vehiculos; track v.placa) {
+      <a class="cola" [routerLink]="['/vehiculos', v.placa]">
+        <div class="cabeza"><span class="placa" [class.publico]="v.codigoCategoria === 'C1'">{{ v.placa }}</span><app-estado [valor]="v.estado" /></div>
+        <div style="margin-top:8px">{{ v.marca }} {{ v.linea }} · {{ v.modeloAnio }}</div>
+        <div class="linea"><span>{{ v.tipoVehiculo | texto }} · categoría {{ v.codigoCategoria }}</span><span>{{ v.transmision | texto }}</span></div>
+        <div class="linea"><span>SOAT {{ (v.estadoSoat | texto).toLowerCase() }}</span><span>{{ v.fechaVencSoat | fecha }}</span></div>
+        <div class="linea"><span>Técnico-mecánica {{ (v.estadoRtm | texto).toLowerCase() }}</span><span>{{ v.fechaVencRtm | fecha }}</span></div>
+        <div class="linea"><span>{{ v.horasUso | numero: 0 }} h de clase</span><span>{{ v.clasesProgramadas }} programadas</span></div>
+      </a>
+    }
+  </div>
+}

@@ -1,0 +1,19 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/target": true
+  },
+  "sqltools.connections": [
+    {
+      "name": "ConduLog (MySQL)",
+      "driver": "MySQL",
+      "server": "127.0.0.1",
+      "port": 3306,
+      "database": "condulog",
+      "username": "consultor",
+      "askForPassword": true,
+      "previewLimit": 50
+    }
+  ]
+}

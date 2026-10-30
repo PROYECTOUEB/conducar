@@ -1,0 +1,56 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else {
+  <div class="encabezado">
+    <div>
+      <h1>Matrículas y pagos</h1>
+      <p class="sub">Cursos en los que se han inscrito los alumnos, lo pagado, el saldo y el avance de horas.</p>
+    </div>
+    <div class="filtros" style="margin:0">
+      <label>Mostrar
+        <select [ngModel]="estado" (ngModelChange)="cambiarEstado($event)">
+          <option value="">Todas las matrículas</option>
+          <option value="ACTIVA">Activas</option>
+          <option value="FINALIZADA">Finalizadas</option>
+          <option value="CANCELADA">Canceladas</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  @if (!matriculas) {
+    <p class="cargando" role="status">Cargando información…</p>
+  } @else {
+    <p class="resultado-meta">{{ matriculas.length }} matrículas · {{ totalPagado | pesos }} recaudados · {{ totalSaldo | pesos }} por cobrar</p>
+    <section class="bloque">
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">N.°</th><th scope="col">Alumno</th><th scope="col">Categoría</th><th scope="col">Fecha</th>
+              <th scope="col">Estado</th><th scope="col" class="num">Valor</th><th scope="col" class="num">Pagado</th>
+              <th scope="col" class="num">Saldo</th><th scope="col" class="num">Avance</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (m of matriculas; track m.idMatricula) {
+              <tr class="fila-enlace" tabindex="0" (click)="abrir(m)" (keydown.enter)="abrir(m)">
+                <td>{{ m.idMatricula }}</td>
+                <td>{{ m.alumno }}</td>
+                <td>{{ m.codigoCategoria }}</td>
+                <td>{{ m.fechaMatricula | fecha }}</td>
+                <td><app-estado [valor]="m.estado" /></td>
+                <td class="num">{{ m.valorPactado | pesos }}</td>
+                <td class="num">{{ m.totalPagado | pesos }}</td>
+                <td class="num">{{ (m.saldo ?? 0) > 0 ? (m.saldo | pesos) : '—' }}</td>
+                <td class="num">{{ avance(m) | numero: 0 }} %</td>
+              </tr>
+            } @empty {
+              <tr><td colspan="9" class="vacio">No hay matrículas para mostrar.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  }
+}

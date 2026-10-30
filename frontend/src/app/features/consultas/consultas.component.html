@@ -1,0 +1,47 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else {
+  <h1>Consultas SQL</h1>
+  <p class="sub">Las {{ total }} consultas de ejemplo del archivo 04_consultas.sql, organizadas por los temas del curso y ejecutadas en vivo sobre MySQL.</p>
+  <div class="consultas">
+    <nav class="bloque lista-consultas" aria-label="Preguntas">
+      @for (g of grupos; track g.categoria) {
+        <h3>{{ g.categoria }}</h3>
+        @for (c of g.items; track c.n) {
+          <a [routerLink]="['/consultas', c.n]" [attr.aria-current]="c.n === seleccionada ? 'true' : null">
+            <b>{{ c.n }}</b><span>{{ c.pregunta }}</span>
+          </a>
+        }
+      }
+    </nav>
+    <section class="bloque">
+      @if (cargandoResultado) {
+        <p class="cargando" role="status">Ejecutando la consulta…</p>
+      } @else if (resultado) {
+        <span class="det">Consulta {{ resultado.n }} · {{ resultado.categoria }}</span>
+        <h2 style="margin-top:4px">{{ resultado.pregunta }}</h2>
+        <h3>Sentencia SQL ejecutada</h3>
+        <pre class="sql">{{ resultado.sql }}</pre>
+        <p>{{ resultado.explicacion }}</p>
+        <h3>Resultado</h3>
+        <p class="resultado-meta">{{ resultado.total }} {{ resultado.total === 1 ? 'fila' : 'filas' }}</p>
+        @if (resultado.total) {
+          <div class="tabla-envoltura">
+            <table>
+              <thead><tr>@for (col of resultado.columnas; track $index) { <th scope="col">{{ col }}</th> }</tr></thead>
+              <tbody>
+                @for (fila of resultado.filas; track $index) {
+                  <tr>@for (v of fila; track $index) { <td>{{ valor(v) }}</td> }</tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <p class="vacio">La consulta no devolvió filas.</p>
+        }
+      } @else {
+        <p class="vacio">Seleccione una pregunta de la lista para ver su sentencia SQL y ejecutarla sobre la base de datos.</p>
+      }
+    </section>
+  </div>
+}

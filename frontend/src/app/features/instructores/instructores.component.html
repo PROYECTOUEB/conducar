@@ -1,0 +1,40 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else if (!instructores) {
+  <p class="cargando" role="status">Cargando información…</p>
+} @else {
+  <h1>Instructores</h1>
+  <p class="sub">Licencia de instructor, categorías que puede enseñar y horas de clase dictadas.</p>
+  <section class="bloque">
+    <div class="tabla-envoltura">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Instructor</th><th scope="col">Licencia</th><th scope="col">Estado de la licencia</th>
+            <th scope="col">Categorías</th><th scope="col" class="num">Horas dictadas</th><th scope="col" class="num">Clases programadas</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (i of instructores; track i.idInstructor) {
+            <tr>
+              <td>
+                <strong>{{ i.nombre }}</strong>
+                <div class="det">{{ i.correo }}</div>
+                @if (i.estado === 'INACTIVO') { <app-estado [valor]="i.estado" /> }
+              </td>
+              <td>{{ i.numeroLicencia }}<div class="det">vence {{ i.fechaVencLicencia | fecha }}</div></td>
+              <td><app-estado [valor]="i.estadoLicencia" /></td>
+              <td>{{ i.categorias || '—' }}</td>
+              <td class="num">{{ i.horasDictadas | numero: 0 }}</td>
+              <td class="num">
+                @if (i.clasesProgramadas) {
+                  <a routerLink="/clases" [queryParams]="{ instructor: i.idInstructor, estado: 'PROGRAMADA' }">{{ i.clasesProgramadas }}</a>
+                } @else { 0 }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+}

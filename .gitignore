@@ -1,0 +1,18 @@
+# Backend (Maven / IDE)
+backend/target/
+*.class
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.factorypath
+
+# Frontend (Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/out-tsc/
+
+.DS_Store
+Thumbs.db
