@@ -1,6 +1,6 @@
 package co.edu.unbosque.conducar.model.panel;
 
-/** Indicadores principales del panel. */
+
 public record Indicadores(
         Integer alumnosActivos,
         Integer matriculasActivas,

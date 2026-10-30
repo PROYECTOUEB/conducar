@@ -2,7 +2,7 @@ package co.edu.unbosque.conducar.model.categoria;
 
 import java.util.List;
 
-/** Categoría de licencia con su curso y plan de estudios. */
+
 public record Categoria(
         String codigoCategoria,
         String descripcion,

@@ -2,7 +2,7 @@ package co.edu.unbosque.conducar.model.matricula;
 
 import java.time.LocalDate;
 
-/** Matrícula con su estado de pagos y de horas. */
+
 public record MatriculaResumen(
         Integer idMatricula,
         Integer idAlumno,

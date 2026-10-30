@@ -2,7 +2,7 @@ package co.edu.unbosque.conducar.model.alumno;
 
 import java.time.LocalDate;
 
-/** Matrícula del alumno con lo pagado y el avance de horas por tipo de clase. */
+
 public record MatriculaAvance(
         Integer idMatricula,
         String codigoCategoria,

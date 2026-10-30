@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-/** Convierte las excepciones en respuestas JSON con un mensaje claro para la interfaz. */
+
 @RestControllerAdvice
 public class ManejadorErrores {
 

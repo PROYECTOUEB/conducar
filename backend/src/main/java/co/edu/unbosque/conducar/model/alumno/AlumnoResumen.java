@@ -2,7 +2,7 @@ package co.edu.unbosque.conducar.model.alumno;
 
 import java.time.LocalDate;
 
-/** Una fila de la lista de alumnos. */
+
 public record AlumnoResumen(
         Integer idAlumno,
         String tipoDocumento,
