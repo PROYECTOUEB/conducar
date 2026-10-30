@@ -128,3 +128,4 @@ SELECT codigo_categoria FROM categoria_licencia EXCEPT SELECT codigo_categoria F
 
 SELECT fecha FROM examen WHERE tipo = 'TEORICO' INTERSECT SELECT fecha FROM examen WHERE tipo = 'PRACTICO' ORDER BY fecha;
 
+
