@@ -16,20 +16,13 @@
     </div>
   </section>
 
-  <div class="rejilla dos">
-    <section class="bloque">
+  <section class="bloque">
       <h2>Próximas clases</h2>
-      <app-leyenda />
-      <div class="tiras">
-        @for (c of panel.proximas; track c.idClase) {
-          <app-tira-clase [clase]="c" />
-        } @empty {
-          <p class="vacio">No hay clases programadas.</p>
-        }
-      </div>
+      <app-tabla-clases [clases]="panel.proximas" vacio="No hay clases programadas." />
       <p style="margin:14px 0 0"><a routerLink="/clases" [queryParams]="{ estado: 'PROGRAMADA' }">Ver toda la agenda ({{ panel.kpi.clasesProgramadas }} clases programadas)</a></p>
-    </section>
+  </section>
 
+  <div>
     <section class="bloque">
       <h2>Alertas ({{ panel.alertas.length }})</h2>
       @if (panel.alertas.length) {

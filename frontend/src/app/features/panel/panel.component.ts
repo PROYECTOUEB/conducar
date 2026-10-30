@@ -4,14 +4,13 @@ import { Alerta, Panel } from '../../core/models/panel.model';
 import { PanelService } from '../../core/services/panel.service';
 import { Barra, BarrasComponent } from '../../shared/components/barras.component';
 import { ErrorComponent } from '../../shared/components/error.component';
-import { LeyendaComponent } from '../../shared/components/leyenda.component';
-import { TiraClaseComponent } from '../../shared/components/tira-clase.component';
+import { TablaClasesComponent } from '../../shared/components/tabla-clases.component';
 import { fecha, mensajeError } from '../../shared/formato';
 import { PIPES } from '../../shared/pipes/formato.pipes';
 
 @Component({
   selector: 'app-panel',
-  imports: [RouterLink, BarrasComponent, ErrorComponent, LeyendaComponent, TiraClaseComponent, PIPES],
+  imports: [RouterLink, BarrasComponent, ErrorComponent, TablaClasesComponent, PIPES],
   templateUrl: './panel.component.html',
 })
 export class PanelComponent implements OnInit {

@@ -5,8 +5,7 @@ import { AlumnoDetalle, MatriculaAvance } from '../../core/models/alumno.model';
 import { AlumnoService } from '../../core/services/alumno.service';
 import { ErrorComponent } from '../../shared/components/error.component';
 import { EstadoComponent } from '../../shared/components/estado.component';
-import { LeyendaComponent } from '../../shared/components/leyenda.component';
-import { TiraClaseComponent } from '../../shared/components/tira-clase.component';
+import { TablaClasesComponent } from '../../shared/components/tabla-clases.component';
 import { mensajeError } from '../../shared/formato';
 import { PIPES } from '../../shared/pipes/formato.pipes';
 
@@ -19,7 +18,7 @@ interface Avance {
 
 @Component({
   selector: 'app-alumno-detalle',
-  imports: [RouterLink, ErrorComponent, EstadoComponent, LeyendaComponent, TiraClaseComponent, PIPES],
+  imports: [RouterLink, ErrorComponent, EstadoComponent, TablaClasesComponent, PIPES],
   templateUrl: './alumno-detalle.component.html',
 })
 export class AlumnoDetalleComponent implements OnInit {

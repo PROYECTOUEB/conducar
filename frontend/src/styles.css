@@ -240,3 +240,14 @@ app-tira-vuelo { display: block; }
 .avance .progreso { margin-top: 0; }
 .placa { display: inline-block; font-family: var(--mono); font-weight: 700; letter-spacing: 0.06em; background: #F6C700; color: #111; border: 2px solid #111; border-radius: 4px; padding: 1px 8px; }
 .placa.publico { background: #FFFFFF; }
+
+/* ---------- tabla de clases ---------- */
+.tabla-clases td { vertical-align: middle; }
+.tabla-clases td.fecha { white-space: nowrap; font-weight: 600; }
+.tabla-clases .tipo-marca { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 8px; vertical-align: 0; border: 1px solid #B9C1CD; }
+.tabla-clases .tipo { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
+.tipo-marca.TEORIA, .tipo.TEORIA { background: var(--t-teoria); }
+.tipo-marca.TALLER, .tipo.TALLER { background: var(--t-taller); }
+.tipo-marca.PRACTICA, .tipo.PRACTICA { background: var(--t-practica); }
+.tabla-clases tr.cancelada td { color: var(--tenue); }
+.tabla-clases tr.cancelada td:nth-child(5) { text-decoration: line-through; }

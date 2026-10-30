@@ -99,13 +99,6 @@
 
   <section class="bloque">
     <h2>Clases ({{ detalle.clases.length }})</h2>
-    <app-leyenda />
-    <div class="tiras">
-      @for (c of detalle.clases; track c.idClase) {
-        <app-tira-clase [clase]="c" [mostrarAlumno]="false" />
-      } @empty {
-        <p class="vacio">Sin clases registradas.</p>
-      }
-    </div>
+    <app-tabla-clases [clases]="detalle.clases" [mostrarAlumno]="false" vacio="Sin clases registradas." />
   </section>
 }
