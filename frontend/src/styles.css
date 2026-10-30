@@ -31,7 +31,8 @@ body {
   margin: 0; font-family: var(--sans); color: var(--tinta); background: var(--cielo);
   line-height: 1.5; font-variant-numeric: tabular-nums;
 }
-app-root { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+app-root { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; transition: grid-template-columns .2s ease; }
+app-root.plegado { grid-template-columns: 72px minmax(0, 1fr); }
 a { color: var(--taxi-oscuro); }
 :focus-visible { outline: 3px solid var(--taxi); outline-offset: 2px; }
 .saltar { position: absolute; left: -999px; top: 8px; background: var(--papel); padding: 8px 12px; z-index: 10; }
@@ -128,8 +129,9 @@ h3 { font-size: 1rem; margin: 0 0 8px; }
 /* ---------- tablas ---------- */
 .tabla-envoltura { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
-th { text-align: left; font-weight: 600; color: var(--tinta-2); border-bottom: 2px solid var(--linea); padding: 8px 9px; white-space: nowrap; vertical-align: bottom; }
-td { border-bottom: 1px solid #E6EAF0; padding: 8px 9px; vertical-align: top; }
+th { text-align: left; font-weight: 600; color: var(--tinta-2); border-bottom: 2px solid var(--linea); padding: 8px 9px; vertical-align: bottom; }
+td { border-bottom: 1px solid #E6EAF0; padding: 8px 9px; vertical-align: top; overflow-wrap: break-word; }
+td .correo { overflow-wrap: anywhere; }
 td.num, th.num { text-align: right; }
 tr.fila-enlace { cursor: pointer; }
 tr.fila-enlace:hover td { background: #F6F8FB; }
@@ -244,14 +246,15 @@ app-tira-vuelo { display: block; }
 
 /* ---------- tabla de clases ---------- */
 .tabla-clases td { vertical-align: middle; }
-.tabla-clases td.fecha { white-space: nowrap; font-weight: 600; }
+.tabla-clases td.fecha { font-weight: 600; }
 .tabla-clases .tipo-marca { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 8px; vertical-align: 0; border: 1px solid #B9C1CD; }
 .tipo { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
 .tipo-marca.TEORIA, .tipo.TEORIA { background: var(--t-teoria); }
 .tipo-marca.TALLER, .tipo.TALLER { background: var(--t-taller); }
 .tipo-marca.PRACTICA, .tipo.PRACTICA { background: var(--t-practica); }
 .tabla-clases tr.cancelada td { color: var(--tenue); }
-.tabla-clases tr.cancelada td:nth-child(6) { text-decoration: line-through; }
+.tabla-clases tr.cancelada .modulo { text-decoration: line-through; }
+.tabla-clases .modulo { display: block; margin-bottom: 3px; }
 
 /* ---------- tema taxi ---------- */
 .marca { position: relative; padding-bottom: 14px; }
@@ -267,7 +270,7 @@ app-tira-vuelo { display: block; }
 .tablas-bd code { background: var(--taxi-suave); color: var(--tinta); border: 1px solid #F0D98A; border-radius: 4px; padding: 1px 6px; margin-left: 4px; font-size: 0.82rem; }
 
 /* nombre de la columna de la base de datos bajo cada encabezado */
-th code.col { display: block; font-size: 0.72rem; font-weight: 500; color: var(--taxi-oscuro); white-space: nowrap; margin-top: 2px; }
+th code.col { display: block; font-size: 0.72rem; font-weight: 500; color: var(--taxi-oscuro); margin-top: 2px; }
 th code.col.calc, dt code.col.calc { color: var(--tenue); font-style: italic; }
 dt code.col { display: block; font-size: 0.72rem; color: var(--taxi-oscuro); }
 
@@ -285,3 +288,32 @@ dt code.col { display: block; font-size: 0.72rem; color: var(--taxi-oscuro); }
 .indicador.destacado .valor { color: var(--taxi); }
 .rejilla.dos-iguales { grid-template-columns: 1fr 1fr; }
 @media (max-width: 1080px) { .rejilla.dos-iguales { grid-template-columns: 1fr; } }
+
+/* ---------- menú lateral plegable ---------- */
+.lateral { overflow: hidden; }
+.cabecera-menu { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+.cabecera-menu .marca { flex: 1; min-width: 0; }
+.plegar { flex: none; width: 30px; height: 30px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.18); background: transparent; color: #DCE3EE; cursor: pointer; display: grid; place-items: center; padding: 0; margin-top: 2px; }
+.plegar:hover { background: rgba(255,255,255,0.08); color: var(--taxi); }
+.plegar svg, .lateral .icono { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.lateral nav a { display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+.lateral nav a[aria-current="page"] .icono { color: var(--taxi); }
+.texto-menu { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+app-root.plegado .lateral { padding-left: 10px; padding-right: 10px; }
+app-root.plegado .texto-menu { display: none; }
+app-root.plegado .cabecera-menu { flex-direction: column; align-items: center; }
+app-root.plegado .marca { padding: 0 0 12px; justify-content: center; }
+app-root.plegado .marca::after { left: 2px; right: 2px; }
+app-root.plegado .lateral nav a { justify-content: center; padding: 10px 0; }
+app-root.plegado .conexion { justify-content: center; padding: 10px 0; }
+@media (max-width: 760px) {
+  app-root.plegado { grid-template-columns: 1fr; }
+  .plegar { display: none; }
+  app-root.plegado .texto-menu { display: inline; }
+  app-root.plegado .lateral { padding: 20px 14px; }
+  app-root.plegado .cabecera-menu { flex-direction: row; }
+  app-root.plegado .lateral nav a, app-root.plegado .conexion { justify-content: flex-start; padding: 9px 12px; }
+}
+
+/* celdas con varios datos de la misma fila */
+td .linea2 { display: block; color: var(--tinta-2); font-size: 0.86rem; font-weight: 400; }

@@ -10,18 +10,14 @@
       <table>
         <thead>
           <tr>
-            <th scope="col" class="num">N.°<code class="col">id_instructor</code></th>
-            <th scope="col">Documento<code class="col">numero_documento</code></th>
-            <th scope="col">Nombres<code class="col">nombres</code></th>
-            <th scope="col">Apellidos<code class="col">apellidos</code></th>
-            <th scope="col">Teléfono<code class="col">telefono</code></th>
-            <th scope="col">Correo<code class="col">correo</code></th>
-            <th scope="col">Licencia<code class="col">numero_licencia_instructor</code></th>
-            <th scope="col">Vence<code class="col">fecha_venc_licencia</code></th>
+            <th scope="col" class="num">N.°<code class="col">id_<wbr>instructor</code></th>
+            <th scope="col">Documento<code class="col">numero_<wbr>documento</code></th>
+            <th scope="col">Nombre<code class="col">nombres</code><code class="col">apellidos</code></th>
+            <th scope="col">Contacto<code class="col">telefono</code><code class="col">correo</code></th>
+            <th scope="col">Licencia<code class="col">numero_<wbr>licencia_<wbr>instructor</code><code class="col">fecha_<wbr>venc_<wbr>licencia</code></th>
             <th scope="col">Estado<code class="col">estado</code></th>
-            <th scope="col">Categorías<code class="col">instructor_categoria</code></th>
-            <th scope="col" class="num">Horas dictadas<code class="col calc">SUM(clase.horas)</code></th>
-            <th scope="col" class="num">Programadas<code class="col calc">COUNT(clase)</code></th>
+            <th scope="col">Categorías<code class="col">instructor_<wbr>categoria</code></th>
+            <th scope="col">Clases<code class="col calc">SUM(clase.<wbr>horas)</code><code class="col calc">COUNT(clase)</code></th>
           </tr>
         </thead>
         <tbody>
@@ -29,19 +25,18 @@
             <tr>
               <td class="num">{{ i.idInstructor }}</td>
               <td>{{ i.numeroDocumento }}</td>
-              <td>{{ i.nombres }}</td>
-              <td>{{ i.apellidos }}</td>
-              <td>{{ i.telefono || 'NULL' }}</td>
-              <td>{{ i.correo }}</td>
-              <td>{{ i.numeroLicencia }}</td>
-              <td>{{ i.fechaVencLicencia | fecha }}<div><app-estado [valor]="i.estadoLicencia" /></div></td>
+              <td><strong>{{ i.nombres }}</strong><span class="linea2">{{ i.apellidos }}</span></td>
+              <td>{{ i.telefono || 'NULL' }}<span class="linea2 correo">{{ i.correo }}</span></td>
+              <td>{{ i.numeroLicencia }}<span class="linea2">vence {{ i.fechaVencLicencia | fecha }}</span><app-estado [valor]="i.estadoLicencia" /></td>
               <td><app-estado [valor]="i.estado" /></td>
               <td>{{ i.categorias || '—' }}</td>
-              <td class="num">{{ i.horasDictadas | numero: 0 }}</td>
-              <td class="num">
-                @if (i.clasesProgramadas) {
-                  <a routerLink="/clases" [queryParams]="{ instructor: i.idInstructor, estado: 'PROGRAMADA' }">{{ i.clasesProgramadas }}</a>
-                } @else { 0 }
+              <td>
+                {{ i.horasDictadas | numero: 0 }} h dictadas
+                <span class="linea2">
+                  @if (i.clasesProgramadas) {
+                    <a routerLink="/clases" [queryParams]="{ instructor: i.idInstructor, estado: 'PROGRAMADA' }">{{ i.clasesProgramadas }} programadas</a>
+                  } @else { 0 programadas }
+                </span>
               </td>
             </tr>
           }
