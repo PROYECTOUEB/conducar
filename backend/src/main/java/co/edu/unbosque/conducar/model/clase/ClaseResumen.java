@@ -10,6 +10,7 @@ public record ClaseResumen(
         LocalTime horaInicio,
         Integer horas,
         String estado,
+        Integer idModulo,
         String tipo,
         String modulo,
         String codigoCategoria,

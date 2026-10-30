@@ -15,7 +15,7 @@ public class ClaseRepository {
 
     /** Consulta base: clase + módulo + matrícula + alumno + instructor. */
     private static final String CLASE_BASE = """
-            SELECT cl.id_clase, cl.fecha, cl.hora_inicio, cl.horas, cl.estado, md.tipo, md.nombre AS modulo,
+            SELECT cl.id_clase, cl.fecha, cl.hora_inicio, cl.horas, cl.estado, cl.id_modulo, md.tipo, md.nombre AS modulo,
                    m.codigo_categoria, cl.id_matricula, a.id_alumno, CONCAT(a.nombres, ' ', a.apellidos) AS alumno,
                    cl.id_instructor, CONCAT(i.nombres, ' ', i.apellidos) AS instructor, cl.placa
             FROM clase cl

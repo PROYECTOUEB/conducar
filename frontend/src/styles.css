@@ -1,11 +1,12 @@
 /* ConduCar – estilos globales del frontend Angular
-   Paleta inspirada en la señalización vial colombiana (verde de información, ámbar preventivo, rojo reglamentario). */
+   Paleta inspirada en los taxis: azul oscuro con detalles en amarillo. */
 :root {
   --tinta: #1B2430;
   --tinta-2: #44505F;
   --tenue: #6A768C;
-  --magenta: #1E7A55;
-  --magenta-suave: #DDF0E6;
+  --taxi: #F5B800;            /* amarillo taxi: rellenos, botones, barras */
+  --taxi-oscuro: #8A5F00;     /* amarillo oscuro: enlaces y textos sobre blanco */
+  --taxi-suave: #FFF3CC;
   --cielo: #EEF0EE;
   --papel: #FFFFFF;
   --linea: #D6DCE4;
@@ -31,8 +32,8 @@ body {
   line-height: 1.5; font-variant-numeric: tabular-nums;
 }
 app-root { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
-a { color: var(--magenta); }
-:focus-visible { outline: 3px solid var(--magenta); outline-offset: 2px; }
+a { color: var(--taxi-oscuro); }
+:focus-visible { outline: 3px solid var(--taxi); outline-offset: 2px; }
 .saltar { position: absolute; left: -999px; top: 8px; background: var(--papel); padding: 8px 12px; z-index: 10; }
 .saltar:focus { left: 8px; }
 
@@ -47,7 +48,7 @@ a { color: var(--magenta); }
   color: #C9D2E0; text-decoration: none; padding: 9px 12px; border-radius: var(--radio); font-size: 0.95rem;
 }
 .lateral nav a:hover { background: rgba(255,255,255,0.07); color: #fff; }
-.lateral nav a[aria-current="page"] { background: rgba(255,255,255,0.12); color: #fff; box-shadow: inset 3px 0 0 var(--magenta); }
+.lateral nav a[aria-current="page"] { background: rgba(255,255,255,0.12); color: #fff; box-shadow: inset 4px 0 0 var(--taxi); }
 .conexion { margin-top: auto; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.12); }
 .punto { width: 9px; height: 9px; border-radius: 50%; background: var(--ambar); flex: none; }
 .conexion.ok .punto { background: #4CC38A; }
@@ -55,7 +56,7 @@ a { color: var(--magenta); }
 .menu { display: none; }
 
 /* ---------- contenido ---------- */
-main { padding: 32px 40px 56px; max-width: 1240px; width: 100%; }
+main { padding: 32px 40px 56px; max-width: 1640px; width: 100%; }
 main:focus { outline: none; }
 h1 { font-size: 1.85rem; line-height: 1.2; margin: 0 0 4px; letter-spacing: -0.015em; }
 h2 { font-size: 1.15rem; margin: 0 0 12px; }
@@ -127,12 +128,12 @@ h3 { font-size: 1rem; margin: 0 0 8px; }
 /* ---------- tablas ---------- */
 .tabla-envoltura { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
-th { text-align: left; font-weight: 600; color: var(--tinta-2); border-bottom: 2px solid var(--linea); padding: 8px 10px; white-space: nowrap; }
-td { border-bottom: 1px solid #E6EAF0; padding: 8px 10px; vertical-align: top; }
+th { text-align: left; font-weight: 600; color: var(--tinta-2); border-bottom: 2px solid var(--linea); padding: 8px 9px; white-space: nowrap; vertical-align: bottom; }
+td { border-bottom: 1px solid #E6EAF0; padding: 8px 9px; vertical-align: top; }
 td.num, th.num { text-align: right; }
 tr.fila-enlace { cursor: pointer; }
 tr.fila-enlace:hover td { background: #F6F8FB; }
-tr.fila-enlace:focus-visible td { background: var(--magenta-suave); }
+tr.fila-enlace:focus-visible td { background: var(--taxi-suave); }
 
 /* ---------- controles ---------- */
 .filtros { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 16px; }
@@ -144,19 +145,19 @@ input, select {
 input[type="search"] { min-width: 280px; }
 button.btn, a.btn {
   font: inherit; font-weight: 600; font-size: 0.95rem; padding: 8px 16px; border-radius: var(--radio); cursor: pointer;
-  border: 1px solid var(--magenta); background: var(--magenta); color: #fff; text-decoration: none; display: inline-block;
+  border: 1px solid #E0A800; background: var(--taxi); color: var(--tinta); text-decoration: none; display: inline-block;
 }
-button.btn.sec { background: var(--papel); color: var(--magenta); }
+button.btn.sec { background: var(--papel); color: var(--tinta); border-color: #D9B44A; }
 button.btn:hover { filter: brightness(1.07); }
 
 /* ---------- barras ---------- */
 .barras { display: flex; flex-direction: column; gap: 8px; }
 .barra { display: grid; grid-template-columns: 150px 1fr 60px; align-items: center; gap: 10px; font-size: 0.9rem; }
 .barra .pista { background: #E7EBF0; height: 12px; border-radius: 2px; overflow: hidden; }
-.barra .relleno { background: var(--tinta-2); height: 100%; }
+.barra .relleno { background: var(--taxi); height: 100%; }
 .barra .cifra { text-align: right; font-weight: 600; }
 .progreso { background: #E7EBF0; height: 8px; border-radius: 4px; overflow: hidden; margin-top: 6px; }
-.progreso > span { display: block; height: 100%; background: var(--magenta); }
+.progreso > span { display: block; height: 100%; background: var(--taxi); }
 
 /* ---------- alertas ---------- */
 .alertas { list-style: none; margin: 0; padding: 0; }
@@ -167,7 +168,7 @@ button.btn:hover { filter: brightness(1.07); }
 .nivel-media { background: var(--ambar); }
 .nivel-baja { background: #8D99AE; }
 .alertas a { color: var(--tinta); text-decoration: none; font-weight: 600; }
-.alertas a:hover { color: var(--magenta); }
+.alertas a:hover { color: var(--taxi-oscuro); }
 .alertas .det { color: var(--tenue); font-size: 0.88rem; }
 .alertas li.oculta { display: none; }
 .mas { margin-top: 10px; }
@@ -189,11 +190,11 @@ button.btn:hover { filter: brightness(1.07); }
 .trayecto .aerod { text-align: center; }
 .trayecto .oaci { font-size: 2rem; font-weight: 800; letter-spacing: 0.06em; }
 .trayecto .ciudad { color: var(--tenue); font-size: 0.88rem; }
-.trayecto .recorrido { border-top: 2px dashed var(--magenta); position: relative; height: 0; }
-.trayecto .recorrido span { position: absolute; left: 50%; top: -14px; transform: translateX(-50%); background: var(--papel); padding: 0 10px; color: var(--magenta); font-weight: 700; }
+.trayecto .recorrido { border-top: 2px dashed var(--taxi); position: relative; height: 0; }
+.trayecto .recorrido span { position: absolute; left: 50%; top: -14px; transform: translateX(-50%); background: var(--papel); padding: 0 10px; color: var(--taxi); font-weight: 700; }
 .calif { display: inline-flex; gap: 3px; }
 .calif i { width: 14px; height: 14px; border-radius: 2px; background: #E1E6ED; display: inline-block; }
-.calif i.on { background: var(--magenta); }
+.calif i.on { background: var(--taxi); }
 
 /* ---------- consultas de álgebra ---------- */
 .consultas { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 20px; align-items: start; }
@@ -202,9 +203,9 @@ button.btn:hover { filter: brightness(1.07); }
 .lista-consultas h3 { font-size: 0.85rem; color: var(--tenue); font-weight: 600; margin: 14px 8px 4px; }
 .lista-consultas a { display: grid; grid-template-columns: 30px 1fr; gap: 6px; padding: 7px 8px; border-radius: var(--radio); text-decoration: none; color: var(--tinta); font-size: 0.88rem; line-height: 1.35; }
 .lista-consultas a:hover { background: #F2F4F7; }
-.lista-consultas a[aria-current="true"] { background: var(--magenta-suave); }
+.lista-consultas a[aria-current="true"] { background: var(--taxi-suave); }
 .lista-consultas a b { color: var(--tenue); font-weight: 600; }
-.algebra { font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif; font-size: 1.12rem; background: #F7F8FA; border-left: 3px solid var(--magenta); padding: 10px 14px; margin: 8px 0 14px; overflow-x: auto; }
+.algebra { font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif; font-size: 1.12rem; background: #F7F8FA; border-left: 3px solid var(--taxi); padding: 10px 14px; margin: 8px 0 14px; overflow-x: auto; }
 .algebra div { white-space: nowrap; padding: 2px 0; }
 .algebra sub { font-size: 0.72em; }
 pre.sql { font-family: var(--mono); font-size: 0.84rem; background: var(--tinta); color: #E3E9F3; padding: 14px 16px; border-radius: var(--radio); overflow-x: auto; margin: 8px 0 16px; }
@@ -245,9 +246,42 @@ app-tira-vuelo { display: block; }
 .tabla-clases td { vertical-align: middle; }
 .tabla-clases td.fecha { white-space: nowrap; font-weight: 600; }
 .tabla-clases .tipo-marca { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 8px; vertical-align: 0; border: 1px solid #B9C1CD; }
-.tabla-clases .tipo { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
+.tipo { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
 .tipo-marca.TEORIA, .tipo.TEORIA { background: var(--t-teoria); }
 .tipo-marca.TALLER, .tipo.TALLER { background: var(--t-taller); }
 .tipo-marca.PRACTICA, .tipo.PRACTICA { background: var(--t-practica); }
 .tabla-clases tr.cancelada td { color: var(--tenue); }
-.tabla-clases tr.cancelada td:nth-child(5) { text-decoration: line-through; }
+.tabla-clases tr.cancelada td:nth-child(6) { text-decoration: line-through; }
+
+/* ---------- tema taxi ---------- */
+.marca { position: relative; padding-bottom: 14px; }
+.marca::after {
+  content: ""; position: absolute; left: 6px; right: 6px; bottom: 0; height: 8px; border-radius: 2px;
+  background: repeating-conic-gradient(var(--taxi) 0 25%, #111 0 50%) 0 0 / 8px 8px;
+}
+.btn:hover { filter: brightness(0.97); }
+
+/* ---------- encabezado de página ---------- */
+.tablas-bd { margin: 2px 0 22px; color: var(--tenue); font-size: 0.9rem; }
+.tablas-bd code, th code.col, dt code.col { font-family: var(--mono); }
+.tablas-bd code { background: var(--taxi-suave); color: var(--tinta); border: 1px solid #F0D98A; border-radius: 4px; padding: 1px 6px; margin-left: 4px; font-size: 0.82rem; }
+
+/* nombre de la columna de la base de datos bajo cada encabezado */
+th code.col { display: block; font-size: 0.72rem; font-weight: 500; color: var(--taxi-oscuro); white-space: nowrap; margin-top: 2px; }
+th code.col.calc, dt code.col.calc { color: var(--tenue); font-style: italic; }
+dt code.col { display: block; font-size: 0.72rem; color: var(--taxi-oscuro); }
+
+/* ---------- indicadores del panel ---------- */
+.indicadores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.indicador.destacado { grid-column: span 2; display: flex; flex-direction: column; justify-content: center; }
+.indicador.destacado .valor { font-size: 2.3rem; }
+@media (max-width: 760px) { .indicadores { grid-template-columns: 1fr 1fr; } }
+.indicador { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 16px 18px; border-top: 4px solid var(--taxi); }
+.indicador .valor { font-size: 1.9rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; white-space: nowrap; }
+.indicador .valor small { font-size: 1rem; color: var(--tenue); font-weight: 500; }
+.indicador .nombre { color: var(--tinta-2); font-size: 0.88rem; margin-top: 4px; }
+.indicador.destacado { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.indicador.destacado .nombre { color: #C9D2E0; }
+.indicador.destacado .valor { color: var(--taxi); }
+.rejilla.dos-iguales { grid-template-columns: 1fr 1fr; }
+@media (max-width: 1080px) { .rejilla.dos-iguales { grid-template-columns: 1fr; } }

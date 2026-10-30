@@ -3,18 +3,44 @@
 } @else if (!vehiculos) {
   <p class="cargando" role="status">Cargando información…</p>
 } @else {
-  <h1>Vehículos de enseñanza</h1>
-  <p class="sub">Flota del centro de enseñanza, su estado y la vigencia del SOAT y de la revisión técnico-mecánica.</p>
-  <div class="colas">
-    @for (v of vehiculos; track v.placa) {
-      <a class="cola" [routerLink]="['/vehiculos', v.placa]">
-        <div class="cabeza"><span class="placa" [class.publico]="v.codigoCategoria === 'C1'">{{ v.placa }}</span><app-estado [valor]="v.estado" /></div>
-        <div style="margin-top:8px">{{ v.marca }} {{ v.linea }} · {{ v.modeloAnio }}</div>
-        <div class="linea"><span>{{ v.tipoVehiculo | texto }} · categoría {{ v.codigoCategoria }}</span><span>{{ v.transmision | texto }}</span></div>
-        <div class="linea"><span>SOAT {{ (v.estadoSoat | texto).toLowerCase() }}</span><span>{{ v.fechaVencSoat | fecha }}</span></div>
-        <div class="linea"><span>Técnico-mecánica {{ (v.estadoRtm | texto).toLowerCase() }}</span><span>{{ v.fechaVencRtm | fecha }}</span></div>
-        <div class="linea"><span>{{ v.horasUso | numero: 0 }} h de clase</span><span>{{ v.clasesProgramadas }} programadas</span></div>
-      </a>
-    }
-  </div>
+  <h1>Vehículos</h1>
+  <p class="tablas-bd">Tabla: <code>vehiculo</code></p>
+  <section class="bloque">
+    <div class="tabla-envoltura">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Placa<code class="col">placa</code></th>
+            <th scope="col">Categoría<code class="col">codigo_categoria</code></th>
+            <th scope="col">Tipo<code class="col">tipo_vehiculo</code></th>
+            <th scope="col">Marca<code class="col">marca</code></th>
+            <th scope="col">Línea<code class="col">linea</code></th>
+            <th scope="col" class="num">Modelo<code class="col">modelo_anio</code></th>
+            <th scope="col">Transmisión<code class="col">transmision</code></th>
+            <th scope="col">Estado<code class="col">estado</code></th>
+            <th scope="col">SOAT<code class="col">fecha_venc_soat</code></th>
+            <th scope="col">Técnico-mecánica<code class="col">fecha_venc_rtm</code></th>
+            <th scope="col" class="num">Horas de uso<code class="col calc">SUM(clase.horas)</code></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (v of vehiculos; track v.placa) {
+            <tr class="fila-enlace" tabindex="0" (click)="abrir(v)" (keydown.enter)="abrir(v)">
+              <td><span class="placa" [class.publico]="v.codigoCategoria === 'C1'">{{ v.placa }}</span></td>
+              <td><strong>{{ v.codigoCategoria }}</strong></td>
+              <td>{{ v.tipoVehiculo | texto }}</td>
+              <td>{{ v.marca }}</td>
+              <td>{{ v.linea }}</td>
+              <td class="num">{{ v.modeloAnio }}</td>
+              <td>{{ v.transmision | texto }}</td>
+              <td><app-estado [valor]="v.estado" /></td>
+              <td>{{ v.fechaVencSoat | fecha }}<div><app-estado [valor]="v.estadoSoat" /></div></td>
+              <td>{{ v.fechaVencRtm | fecha }}<div><app-estado [valor]="v.estadoRtm" /></div></td>
+              <td class="num">{{ v.horasUso | numero: 0 }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
 }

@@ -1,15 +1,11 @@
 @if (error) {
   <app-error [mensaje]="error" />
 } @else {
-  <div class="encabezado">
-    <div>
-      <h1>Alumnos</h1>
-      <p class="sub">Seleccione un alumno para ver sus matrículas, el avance de horas, sus clases, exámenes y pagos.</p>
-    </div>
-  </div>
+  <h1>Alumnos</h1>
+  <p class="tablas-bd">Tabla: <code>alumno</code></p>
   <form class="filtros" role="search" (ngSubmit)="buscar()">
     <label>Buscar por nombre o documento
-      <input type="search" name="q" [(ngModel)]="texto" placeholder="Ej.: Rodríguez o 1012345678" autocomplete="off">
+      <input type="search" name="q" [(ngModel)]="texto" placeholder="Ej.: Contreras o 1089106819" autocomplete="off">
     </label>
     <button class="btn" type="submit">Buscar</button>
   </form>
@@ -24,17 +20,30 @@
         <table>
           <thead>
             <tr>
-              <th scope="col">Documento</th><th scope="col">Nombre</th><th scope="col">Curso activo</th>
-              <th scope="col" class="num">Horas dictadas</th><th scope="col">Examen CRC</th>
+              <th scope="col" class="num">N.°<code class="col">id_alumno</code></th>
+              <th scope="col">Tipo doc.<code class="col">tipo_documento</code></th>
+              <th scope="col">Documento<code class="col">numero_documento</code></th>
+              <th scope="col">Nombres<code class="col">nombres</code></th>
+              <th scope="col">Apellidos<code class="col">apellidos</code></th>
+              <th scope="col">Nacimiento<code class="col">fecha_nacimiento</code></th>
+              <th scope="col">Teléfono<code class="col">telefono</code></th>
+              <th scope="col">Correo<code class="col">correo</code></th>
+              <th scope="col">Registro<code class="col">fecha_registro</code></th>
+              <th scope="col">Examen CRC<code class="col">certificado_crc.resultado</code></th>
             </tr>
           </thead>
           <tbody>
             @for (a of alumnos; track a.idAlumno) {
               <tr class="fila-enlace" tabindex="0" (click)="abrir(a)" (keydown.enter)="abrir(a)">
-                <td>{{ a.tipoDocumento }} {{ a.numeroDocumento }}</td>
-                <td>{{ a.nombres }} {{ a.apellidos }}</td>
-                <td>{{ a.categoriaActiva ? 'Categoría ' + a.categoriaActiva : 'Sin matrícula activa' }}</td>
-                <td class="num">{{ a.horasDictadas | numero: 0 }}</td>
+                <td class="num">{{ a.idAlumno }}</td>
+                <td>{{ a.tipoDocumento }}</td>
+                <td>{{ a.numeroDocumento }}</td>
+                <td>{{ a.nombres }}</td>
+                <td>{{ a.apellidos }}</td>
+                <td>{{ a.fechaNacimiento | fecha }}</td>
+                <td>{{ a.telefono || 'NULL' }}</td>
+                <td>{{ a.correo }}</td>
+                <td>{{ a.fechaRegistro | fecha }}</td>
                 <td><app-estado [valor]="a.estadoCrc" /></td>
               </tr>
             }

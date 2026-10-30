@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { VehiculoResumen } from '../../core/models/vehiculo.model';
 import { VehiculoService } from '../../core/services/vehiculo.service';
 import { ErrorComponent } from '../../shared/components/error.component';
@@ -9,11 +9,12 @@ import { PIPES } from '../../shared/pipes/formato.pipes';
 
 @Component({
   selector: 'app-vehiculos',
-  imports: [RouterLink, ErrorComponent, EstadoComponent, PIPES],
+  imports: [ErrorComponent, EstadoComponent, PIPES],
   templateUrl: './vehiculos.component.html',
 })
 export class VehiculosComponent implements OnInit {
   private readonly vehiculoService = inject(VehiculoService);
+  private readonly router = inject(Router);
 
   vehiculos?: VehiculoResumen[];
   error = '';
@@ -23,5 +24,9 @@ export class VehiculosComponent implements OnInit {
       next: (v) => (this.vehiculos = v),
       error: (e) => (this.error = mensajeError(e)),
     });
+  }
+
+  abrir(v: VehiculoResumen): void {
+    this.router.navigate(['/vehiculos', v.placa]);
   }
 }

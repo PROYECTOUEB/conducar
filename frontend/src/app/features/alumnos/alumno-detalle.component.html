@@ -4,43 +4,63 @@
   <p class="cargando" role="status">Cargando información…</p>
 } @else {
   <a class="volver" routerLink="/alumnos">Volver a alumnos</a>
-  <div class="encabezado">
-    <div>
-      <h1>{{ detalle.datos.nombres }} {{ detalle.datos.apellidos }}</h1>
-      <p class="sub">{{ detalle.datos.tipoDocumento }} {{ detalle.datos.numeroDocumento }} · {{ detalle.datos.correo }}</p>
-    </div>
+  <div class="encabezado" style="margin-bottom:6px">
+    <h1>{{ detalle.datos.nombres }} {{ detalle.datos.apellidos }}</h1>
     <app-estado [valor]="estadoCrc" />
   </div>
+  <p class="tablas-bd">Tablas: <code>alumno</code><code>certificado_crc</code><code>matricula</code><code>pago</code><code>examen</code><code>clase</code></p>
 
   <section class="bloque">
+    <h2>Datos del alumno</h2>
     <dl class="ficha">
-      <div><dt>Edad</dt><dd>{{ detalle.datos.edad }} años</dd></div>
-      <div><dt>Teléfono</dt><dd>{{ detalle.datos.telefono || 'No registrado' }}</dd></div>
-      <div><dt>Fecha de nacimiento</dt><dd>{{ detalle.datos.fechaNacimiento | fecha }}</dd></div>
-      <div><dt>Registro en la escuela</dt><dd>{{ detalle.datos.fechaRegistro | fecha }}</dd></div>
-      <div><dt>Examen médico (CRC)</dt>
-        <dd>
-          @if (detalle.certificados.length) {
-            {{ detalle.certificados[0].nombreCrc }}, {{ detalle.certificados[0].fechaExamen | fecha }}
-          } @else { Sin examen: no puede iniciar clases }
-        </dd>
-      </div>
+      <div><dt>N.°<code class="col">id_alumno</code></dt><dd>{{ detalle.datos.idAlumno }}</dd></div>
+      <div><dt>Documento<code class="col">tipo_documento, numero_documento</code></dt><dd>{{ detalle.datos.tipoDocumento }} {{ detalle.datos.numeroDocumento }}</dd></div>
+      <div><dt>Nombres<code class="col">nombres</code></dt><dd>{{ detalle.datos.nombres }}</dd></div>
+      <div><dt>Apellidos<code class="col">apellidos</code></dt><dd>{{ detalle.datos.apellidos }}</dd></div>
+      <div><dt>Nacimiento<code class="col">fecha_nacimiento</code></dt><dd>{{ detalle.datos.fechaNacimiento | fecha }} ({{ detalle.datos.edad }} años)</dd></div>
+      <div><dt>Teléfono<code class="col">telefono</code></dt><dd>{{ detalle.datos.telefono || 'NULL' }}</dd></div>
+      <div><dt>Correo<code class="col">correo</code></dt><dd>{{ detalle.datos.correo }}</dd></div>
+      <div><dt>Registro<code class="col">fecha_registro</code></dt><dd>{{ detalle.datos.fechaRegistro | fecha }}</dd></div>
     </dl>
   </section>
 
   <section class="bloque">
-    <h2>Matrículas y avance de horas</h2>
+    <h2>Examen médico</h2>
+    @if (detalle.certificados.length) {
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr>
+            <th scope="col">CRC<code class="col">nombre_crc</code></th>
+            <th scope="col">Fecha<code class="col">fecha_examen</code></th>
+            <th scope="col">Resultado<code class="col">resultado</code></th>
+          </tr></thead>
+          <tbody>
+            @for (c of detalle.certificados; track $index) {
+              <tr><td>{{ c.nombreCrc }}</td><td>{{ c.fechaExamen | fecha }}</td><td><app-estado [valor]="c.resultado" /></td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <p class="vacio">Sin examen del CRC: no puede iniciar clases.</p>
+    }
+  </section>
+
+  <section class="bloque">
+    <h2>Matrículas</h2>
     @for (m of detalle.matriculas; track m.idMatricula) {
       <div class="matricula-item">
         <div class="cabeza">
-          <strong>Categoría {{ m.codigoCategoria }} · {{ m.descripcion }}</strong>
+          <strong>Matrícula {{ m.idMatricula }} · categoría {{ m.codigoCategoria }}</strong>
           <app-estado [valor]="m.estado" />
         </div>
-        <div class="det">
-          Matrícula {{ m.idMatricula }} del {{ m.fechaMatricula | fecha }} · pagado {{ m.totalPagado | pesos }} de {{ m.valorPactado | pesos }}
-          @if (saldo(m) > 0) { · <strong>saldo {{ saldo(m) | pesos }}</strong> }
-          @if (m.numeroCertificado) { · certificado de aptitud {{ m.numeroCertificado }} }
-        </div>
+        <dl class="ficha" style="margin:10px 0">
+          <div><dt>Fecha<code class="col">fecha_matricula</code></dt><dd>{{ m.fechaMatricula | fecha }}</dd></div>
+          <div><dt>Valor<code class="col">valor_pactado</code></dt><dd>{{ m.valorPactado | pesos }}</dd></div>
+          <div><dt>Pagado<code class="col calc">SUM(pago.valor)</code></dt><dd>{{ m.totalPagado | pesos }}</dd></div>
+          <div><dt>Saldo<code class="col calc">calculado</code></dt><dd>{{ saldo(m) | pesos }}</dd></div>
+          <div><dt>Certificado<code class="col">certificado_aptitud</code></dt><dd>{{ m.numeroCertificado || 'Sin certificado' }}</dd></div>
+        </dl>
         @for (a of avances(m); track a.tipo) {
           <div class="avance">
             <span>{{ a.tipo }}</span>
@@ -54,26 +74,34 @@
     }
   </section>
 
-  <div class="rejilla mitad">
+  <div class="rejilla dos-iguales">
     <section class="bloque">
       <h2>Exámenes</h2>
       @if (detalle.examenes.length) {
         <div class="tabla-envoltura">
           <table>
-            <thead><tr><th scope="col">Fecha</th><th scope="col">Tipo</th><th scope="col" class="num">Puntaje</th><th scope="col">Resultado</th></tr></thead>
+            <thead><tr>
+              <th scope="col" class="num">N.°<code class="col">id_examen</code></th>
+              <th scope="col" class="num">Matrícula<code class="col">id_matricula</code></th>
+              <th scope="col">Tipo<code class="col">tipo</code></th>
+              <th scope="col">Fecha<code class="col">fecha</code></th>
+              <th scope="col" class="num">Puntaje<code class="col">puntaje</code></th>
+              <th scope="col">Resultado<code class="col calc">puntaje ≥ 80</code></th>
+            </tr></thead>
             <tbody>
               @for (e of detalle.examenes; track e.idExamen) {
                 <tr>
+                  <td class="num">{{ e.idExamen }}</td>
+                  <td class="num">{{ e.idMatricula }}</td>
+                  <td>{{ e.tipo | texto }}</td>
                   <td>{{ e.fecha | fecha }}</td>
-                  <td>{{ e.tipo | texto }} ({{ e.codigoCategoria }})</td>
-                  <td class="num">{{ e.puntaje | numero }}</td>
+                  <td class="num">{{ e.puntaje | numero: 2 }}</td>
                   <td><app-estado [valor]="e.resultado" /></td>
                 </tr>
               }
             </tbody>
           </table>
         </div>
-        <p class="det">Se aprueba con 80 puntos o más.</p>
       } @else {
         <p class="vacio">Aún no ha presentado exámenes.</p>
       }
@@ -83,10 +111,22 @@
       @if (detalle.pagos.length) {
         <div class="tabla-envoltura">
           <table>
-            <thead><tr><th scope="col">Fecha</th><th scope="col">Matrícula</th><th scope="col">Medio</th><th scope="col" class="num">Valor</th></tr></thead>
+            <thead><tr>
+              <th scope="col" class="num">N.°<code class="col">id_pago</code></th>
+              <th scope="col" class="num">Matrícula<code class="col">id_matricula</code></th>
+              <th scope="col">Fecha<code class="col">fecha_pago</code></th>
+              <th scope="col">Medio<code class="col">medio_pago</code></th>
+              <th scope="col" class="num">Valor<code class="col">valor</code></th>
+            </tr></thead>
             <tbody>
               @for (p of detalle.pagos; track p.idPago) {
-                <tr><td>{{ p.fechaPago | fecha }}</td><td>{{ p.idMatricula }}</td><td>{{ p.medioPago | texto }}</td><td class="num">{{ p.valor | pesos }}</td></tr>
+                <tr>
+                  <td class="num">{{ p.idPago }}</td>
+                  <td class="num">{{ p.idMatricula }}</td>
+                  <td>{{ p.fechaPago | fecha }}</td>
+                  <td>{{ p.medioPago | texto }}</td>
+                  <td class="num">{{ p.valor | pesos }}</td>
+                </tr>
               }
             </tbody>
           </table>

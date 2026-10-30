@@ -3,47 +3,73 @@
 } @else if (!cargado) {
   <p class="cargando" role="status">Cargando información…</p>
 } @else {
-  <h1>Cursos y categorías de licencia</h1>
-  <p class="sub">Plan de estudios de cada curso que ofrece la escuela: módulos (materias) de teoría, taller y práctica con su intensidad horaria.</p>
-  @for (c of ofrecidas; track c.codigoCategoria) {
-    <section class="bloque">
-      <div class="encabezado" style="margin-bottom:12px">
-        <h2 style="margin:0">Categoría {{ c.codigoCategoria }}</h2>
-        <span class="det">{{ c.matriculasActivas }} matrículas activas de {{ c.matriculas }}</span>
-      </div>
-      <p style="margin-top:0">{{ c.descripcion }}.</p>
-      <dl class="ficha" style="margin-bottom:16px">
-        <div><dt>Servicio</dt><dd>{{ c.tipoServicio | texto }}</dd></div>
-        <div><dt>Edad mínima</dt><dd>{{ c.edadMinima }} años</dd></div>
-        <div><dt>Intensidad total</dt><dd>{{ c.horasTotales }} horas</dd></div>
-        <div><dt>Valor del curso</dt><dd>{{ c.valorCurso | pesos }}</dd></div>
-      </dl>
-      @for (t of tipos; track t) {
-        <h3>{{ t | tipoClase }} · {{ horas(c, t) }} h</h3>
-        <div class="tabla-envoltura">
-          <table>
-            <thead><tr><th scope="col">Módulo</th><th scope="col">Contenido</th><th scope="col" class="num">Horas</th></tr></thead>
-            <tbody>
-              @for (m of modulos(c, t); track m.idModulo) {
-                <tr><td><strong>{{ m.nombre }}</strong></td><td>{{ m.descripcion }}</td><td class="num">{{ m.horas }}</td></tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      }
-    </section>
-  }
+  <h1>Cursos y categorías</h1>
+  <p class="tablas-bd">Tablas: <code>categoria_licencia</code><code>plan_curso</code><code>modulo</code></p>
+
   <section class="bloque">
-    <h2>Otras categorías de licencia (no ofrecidas por la escuela)</h2>
+    <h2>Categorías de licencia</h2>
     <div class="tabla-envoltura">
       <table>
-        <thead><tr><th scope="col">Categoría</th><th scope="col">Vehículos</th><th scope="col">Servicio</th><th scope="col" class="num">Edad mínima</th></tr></thead>
+        <thead>
+          <tr>
+            <th scope="col">Código<code class="col">codigo_categoria</code></th>
+            <th scope="col">Descripción<code class="col">descripcion</code></th>
+            <th scope="col">Servicio<code class="col">tipo_servicio</code></th>
+            <th scope="col" class="num">Edad mínima<code class="col">edad_minima</code></th>
+            <th scope="col" class="num">Valor del curso<code class="col">valor_curso</code></th>
+            <th scope="col" class="num">Horas del plan<code class="col calc">SUM(plan_curso.horas)</code></th>
+            <th scope="col" class="num">Matrículas<code class="col calc">COUNT(matricula)</code></th>
+          </tr>
+        </thead>
         <tbody>
-          @for (c of otras; track c.codigoCategoria) {
-            <tr><td>{{ c.codigoCategoria }}</td><td>{{ c.descripcion }}</td><td>{{ c.tipoServicio | texto }}</td><td class="num">{{ c.edadMinima }}</td></tr>
+          @for (c of todas; track c.codigoCategoria) {
+            <tr>
+              <td><strong>{{ c.codigoCategoria }}</strong></td>
+              <td>{{ c.descripcion }}</td>
+              <td>{{ c.tipoServicio | texto }}</td>
+              <td class="num">{{ c.edadMinima }}</td>
+              <td class="num">{{ c.valorCurso === null ? 'NULL (no se ofrece)' : (c.valorCurso | pesos) }}</td>
+              <td class="num">{{ c.horasTotales }}</td>
+              <td class="num">{{ c.matriculas }}</td>
+            </tr>
           }
         </tbody>
       </table>
     </div>
   </section>
+
+  @for (c of ofrecidas; track c.codigoCategoria) {
+    <section class="bloque">
+      <div class="encabezado" style="margin-bottom:10px">
+        <h2 style="margin:0">Plan de curso {{ c.codigoCategoria }}</h2>
+        <span class="det">Teoría {{ horas(c, 'TEORIA') }} h · Taller {{ horas(c, 'TALLER') }} h · Práctica {{ horas(c, 'PRACTICA') }} h · Total {{ c.horasTotales }} h</span>
+      </div>
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col" class="num">Módulo<code class="col">id_modulo</code></th>
+              <th scope="col">Nombre<code class="col">modulo.nombre</code></th>
+              <th scope="col">Tipo<code class="col">modulo.tipo</code></th>
+              <th scope="col">Descripción<code class="col">modulo.descripcion</code></th>
+              <th scope="col" class="num">Horas<code class="col">plan_curso.horas</code></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (m of c.modulos; track m.idModulo) {
+              <tr>
+                <td class="num">{{ m.idModulo }}</td>
+                <td><strong>{{ m.nombre }}</strong></td>
+                <td><span [class]="'tipo ' + m.tipo">{{ m.tipo | tipoClase }}</span></td>
+                <td>{{ m.descripcion }}</td>
+                <td class="num">{{ m.horas }}</td>
+              </tr>
+            } @empty {
+              <tr><td colspan="5" class="vacio">Esta categoría no tiene módulos en plan_curso.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  }
 }

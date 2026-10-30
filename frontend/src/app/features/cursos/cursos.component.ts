@@ -13,28 +13,23 @@ import { PIPES } from '../../shared/pipes/formato.pipes';
 export class CursosComponent implements OnInit {
   private readonly categoriaService = inject(CategoriaService);
 
+  todas: Categoria[] = [];
   ofrecidas: Categoria[] = [];
-  otras: Categoria[] = [];
   cargado = false;
   error = '';
-  readonly tipos = ['TEORIA', 'TALLER', 'PRACTICA'];
-
   ngOnInit(): void {
     this.categoriaService.listar().subscribe({
       next: (c) => {
-        this.ofrecidas = c.filter((x) => x.valorCurso !== null);
-        this.otras = c.filter((x) => x.valorCurso === null);
+        this.todas = c;
+        this.ofrecidas = c.filter((x) => x.valorCurso !== null || x.modulos.length > 0);
         this.cargado = true;
       },
       error: (e) => (this.error = mensajeError(e)),
     });
   }
 
-  modulos(c: Categoria, tipo: string): ModuloPlan[] {
-    return c.modulos.filter((m) => m.tipo === tipo);
-  }
-
+  /** Horas del plan de un tipo de clase (teoría, taller o práctica). */
   horas(c: Categoria, tipo: string): number {
-    return this.modulos(c, tipo).reduce((suma, m) => suma + (m.horas ?? 0), 0);
+    return c.modulos.filter((m: ModuloPlan) => m.tipo === tipo).reduce((suma, m) => suma + (m.horas ?? 0), 0);
   }
 }

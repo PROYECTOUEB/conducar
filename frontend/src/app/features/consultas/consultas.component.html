@@ -2,7 +2,7 @@
   <app-error [mensaje]="error" />
 } @else {
   <h1>Consultas SQL</h1>
-  <p class="sub">Las {{ total }} consultas de ejemplo del archivo 04_consultas.sql, organizadas por los temas del curso y ejecutadas en vivo sobre MySQL.</p>
+  <p class="tablas-bd">{{ total }} consultas del archivo <code>04_consultas.sql</code></p>
   <div class="consultas">
     <nav class="bloque lista-consultas" aria-label="Preguntas">
       @for (g of grupos; track g.categoria) {

@@ -1,15 +1,15 @@
 @if (error) {
   <app-error [mensaje]="error" />
 } @else {
-  <div class="encabezado">
+  <div class="encabezado" style="margin-bottom:0">
     <div>
       <h1>Matrículas y pagos</h1>
-      <p class="sub">Cursos en los que se han inscrito los alumnos, lo pagado, el saldo y el avance de horas.</p>
+      <p class="tablas-bd">Tablas: <code>matricula</code><code>pago</code></p>
     </div>
-    <div class="filtros" style="margin:0">
-      <label>Mostrar
+    <div class="filtros" style="margin:0 0 22px">
+      <label>Estado
         <select [ngModel]="estado" (ngModelChange)="cambiarEstado($event)">
-          <option value="">Todas las matrículas</option>
+          <option value="">Todas</option>
           <option value="ACTIVA">Activas</option>
           <option value="FINALIZADA">Finalizadas</option>
           <option value="CANCELADA">Canceladas</option>
@@ -27,23 +27,29 @@
         <table>
           <thead>
             <tr>
-              <th scope="col">N.°</th><th scope="col">Alumno</th><th scope="col">Categoría</th><th scope="col">Fecha</th>
-              <th scope="col">Estado</th><th scope="col" class="num">Valor</th><th scope="col" class="num">Pagado</th>
-              <th scope="col" class="num">Saldo</th><th scope="col" class="num">Avance</th>
+              <th scope="col" class="num">N.°<code class="col">id_matricula</code></th>
+              <th scope="col">Alumno<code class="col">id_alumno</code></th>
+              <th scope="col">Categoría<code class="col">codigo_categoria</code></th>
+              <th scope="col">Fecha<code class="col">fecha_matricula</code></th>
+              <th scope="col" class="num">Valor<code class="col">valor_pactado</code></th>
+              <th scope="col">Estado<code class="col">estado</code></th>
+              <th scope="col" class="num">Pagado<code class="col calc">SUM(pago.valor)</code></th>
+              <th scope="col" class="num">Saldo<code class="col calc">calculado</code></th>
+              <th scope="col" class="num">Avance<code class="col calc">horas dictadas / plan</code></th>
             </tr>
           </thead>
           <tbody>
             @for (m of matriculas; track m.idMatricula) {
               <tr class="fila-enlace" tabindex="0" (click)="abrir(m)" (keydown.enter)="abrir(m)">
-                <td>{{ m.idMatricula }}</td>
-                <td>{{ m.alumno }}</td>
+                <td class="num">{{ m.idMatricula }}</td>
+                <td>{{ m.idAlumno }} · {{ m.alumno }}</td>
                 <td>{{ m.codigoCategoria }}</td>
                 <td>{{ m.fechaMatricula | fecha }}</td>
-                <td><app-estado [valor]="m.estado" /></td>
                 <td class="num">{{ m.valorPactado | pesos }}</td>
+                <td><app-estado [valor]="m.estado" /></td>
                 <td class="num">{{ m.totalPagado | pesos }}</td>
-                <td class="num">{{ (m.saldo ?? 0) > 0 ? (m.saldo | pesos) : '—' }}</td>
-                <td class="num">{{ avance(m) | numero: 0 }} %</td>
+                <td class="num">{{ m.saldo | pesos }}</td>
+                <td class="num">{{ m.horasDictadas }} / {{ m.horasPlan }} h</td>
               </tr>
             } @empty {
               <tr><td colspan="9" class="vacio">No hay matrículas para mostrar.</td></tr>
