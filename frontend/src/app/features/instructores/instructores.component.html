@@ -4,26 +4,38 @@
   <p class="cargando" role="status">Cargando información…</p>
 } @else {
   <h1>Instructores</h1>
-  <p class="sub">Licencia de instructor, categorías que puede enseñar y horas de clase dictadas.</p>
+  <p class="tablas-bd">Tablas: <code>instructor</code><code>instructor_categoria</code></p>
   <section class="bloque">
     <div class="tabla-envoltura">
       <table>
         <thead>
           <tr>
-            <th scope="col">Instructor</th><th scope="col">Licencia</th><th scope="col">Estado de la licencia</th>
-            <th scope="col">Categorías</th><th scope="col" class="num">Horas dictadas</th><th scope="col" class="num">Clases programadas</th>
+            <th scope="col" class="num">N.°<code class="col">id_instructor</code></th>
+            <th scope="col">Documento<code class="col">numero_documento</code></th>
+            <th scope="col">Nombres<code class="col">nombres</code></th>
+            <th scope="col">Apellidos<code class="col">apellidos</code></th>
+            <th scope="col">Teléfono<code class="col">telefono</code></th>
+            <th scope="col">Correo<code class="col">correo</code></th>
+            <th scope="col">Licencia<code class="col">numero_licencia_instructor</code></th>
+            <th scope="col">Vence<code class="col">fecha_venc_licencia</code></th>
+            <th scope="col">Estado<code class="col">estado</code></th>
+            <th scope="col">Categorías<code class="col">instructor_categoria</code></th>
+            <th scope="col" class="num">Horas dictadas<code class="col calc">SUM(clase.horas)</code></th>
+            <th scope="col" class="num">Programadas<code class="col calc">COUNT(clase)</code></th>
           </tr>
         </thead>
         <tbody>
           @for (i of instructores; track i.idInstructor) {
             <tr>
-              <td>
-                <strong>{{ i.nombre }}</strong>
-                <div class="det">{{ i.correo }}</div>
-                @if (i.estado === 'INACTIVO') { <app-estado [valor]="i.estado" /> }
-              </td>
-              <td>{{ i.numeroLicencia }}<div class="det">vence {{ i.fechaVencLicencia | fecha }}</div></td>
-              <td><app-estado [valor]="i.estadoLicencia" /></td>
+              <td class="num">{{ i.idInstructor }}</td>
+              <td>{{ i.numeroDocumento }}</td>
+              <td>{{ i.nombres }}</td>
+              <td>{{ i.apellidos }}</td>
+              <td>{{ i.telefono || 'NULL' }}</td>
+              <td>{{ i.correo }}</td>
+              <td>{{ i.numeroLicencia }}</td>
+              <td>{{ i.fechaVencLicencia | fecha }}<div><app-estado [valor]="i.estadoLicencia" /></div></td>
+              <td><app-estado [valor]="i.estado" /></td>
               <td>{{ i.categorias || '—' }}</td>
               <td class="num">{{ i.horasDictadas | numero: 0 }}</td>
               <td class="num">

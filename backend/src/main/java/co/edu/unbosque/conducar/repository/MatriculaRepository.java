@@ -36,7 +36,7 @@ public class MatriculaRepository {
                        (SELECT SUM(pc.horas) FROM plan_curso pc WHERE pc.codigo_categoria = m.codigo_categoria) AS horas_plan
                 FROM matricula m
                 JOIN alumno a ON a.id_alumno = m.id_alumno
-                """ + where + "ORDER BY m.fecha_matricula DESC";
+                """ + where + "ORDER BY m.id_matricula";
         return jdbc.query(sql, p, new DataClassRowMapper<>(MatriculaResumen.class));
     }
 }

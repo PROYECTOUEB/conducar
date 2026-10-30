@@ -7,8 +7,10 @@ export interface AlumnoResumen {
   numeroDocumento: string | null;
   nombres: string | null;
   apellidos: string | null;
-  correo: string | null;
+  fechaNacimiento: string | null;
   telefono: string | null;
+  correo: string | null;
+  fechaRegistro: string | null;
   categoriaActiva: string | null;
   horasDictadas: number | null;
   estadoCrc: string | null;

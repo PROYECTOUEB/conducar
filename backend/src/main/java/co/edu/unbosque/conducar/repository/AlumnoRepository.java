@@ -35,7 +35,8 @@ public class AlumnoRepository {
             p.addValue("patron", "%" + texto + "%");
         }
         String sql = """
-                SELECT a.id_alumno, a.tipo_documento, a.numero_documento, a.nombres, a.apellidos, a.correo, a.telefono,
+                SELECT a.id_alumno, a.tipo_documento, a.numero_documento, a.nombres, a.apellidos, a.fecha_nacimiento,
+                       a.telefono, a.correo, a.fecha_registro,
                        (SELECT MAX(m.codigo_categoria) FROM matricula m
                          WHERE m.id_alumno = a.id_alumno AND m.estado = 'ACTIVA') AS categoria_activa,
                        (SELECT COALESCE(SUM(cl.horas), 0) FROM clase cl JOIN matricula m ON m.id_matricula = cl.id_matricula
@@ -44,7 +45,7 @@ public class AlumnoRepository {
                             WHEN a.id_alumno IN (SELECT id_alumno FROM certificado_crc) THEN 'NO APTO'
                             ELSE 'SIN REGISTRO' END AS estado_crc
                 FROM alumno a
-                """ + filtro + "ORDER BY a.apellidos, a.nombres";
+                """ + filtro + "ORDER BY a.id_alumno";
         return jdbc.query(sql, p, new DataClassRowMapper<>(AlumnoResumen.class));
     }
 

@@ -1,9 +1,12 @@
 /** Instructor con su licencia, categorías y horas dictadas. */
 export interface InstructorResumen {
   idInstructor: number | null;
+  numeroDocumento: string | null;
+  nombres: string | null;
+  apellidos: string | null;
   nombre: string | null;
-  correo: string | null;
   telefono: string | null;
+  correo: string | null;
   numeroLicencia: string | null;
   fechaVencLicencia: string | null;
   estadoLicencia: string | null;

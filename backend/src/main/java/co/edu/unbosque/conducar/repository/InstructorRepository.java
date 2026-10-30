@@ -22,7 +22,8 @@ public class InstructorRepository {
 
     public List<InstructorResumen> listar(LocalDate hoy, LocalDate en60) {
         String sql = """
-                SELECT i.id_instructor, CONCAT(i.nombres, ' ', i.apellidos) AS nombre, i.correo, i.telefono,
+                SELECT i.id_instructor, i.numero_documento, i.nombres, i.apellidos,
+                       CONCAT(i.nombres, ' ', i.apellidos) AS nombre, i.telefono, i.correo,
                        i.numero_licencia_instructor AS numero_licencia, i.fecha_venc_licencia,
                        CASE WHEN i.fecha_venc_licencia < :hoy THEN 'VENCIDA'
                             WHEN i.fecha_venc_licencia < :en60 THEN 'POR VENCER'
@@ -34,7 +35,7 @@ public class InstructorRepository {
                          WHERE cl.id_instructor = i.id_instructor AND cl.estado = 'PROGRAMADA') AS clases_programadas,
                        NULL AS categorias
                 FROM instructor i
-                ORDER BY nombre
+                ORDER BY i.id_instructor
                 """;
         MapSqlParameterSource p = new MapSqlParameterSource("hoy", hoy).addValue("en60", en60);
         return jdbc.query(sql, p, new DataClassRowMapper<>(InstructorResumen.class));

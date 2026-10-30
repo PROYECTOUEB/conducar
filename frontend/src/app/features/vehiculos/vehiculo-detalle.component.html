@@ -4,27 +4,29 @@
   <p class="cargando" role="status">Cargando información…</p>
 } @else {
   <a class="volver" routerLink="/vehiculos">Volver a vehículos</a>
-  <div class="encabezado">
-    <div>
-      <h1><span class="placa" [class.publico]="detalle.datos.codigoCategoria === 'C1'">{{ detalle.datos.placa }}</span></h1>
-      <p class="sub">{{ detalle.datos.marca }} {{ detalle.datos.linea }} · {{ detalle.datos.modeloAnio }} · categoría {{ detalle.datos.codigoCategoria }}</p>
-    </div>
+  <div class="encabezado" style="margin-bottom:6px">
+    <h1><span class="placa" [class.publico]="detalle.datos.codigoCategoria === 'C1'">{{ detalle.datos.placa }}</span></h1>
     <app-estado [valor]="detalle.datos.estado" />
   </div>
+  <p class="tablas-bd">Tablas: <code>vehiculo</code><code>clase</code></p>
 
   <section class="bloque">
     <dl class="ficha">
-      <div><dt>Tipo</dt><dd>{{ detalle.datos.tipoVehiculo | texto }}</dd></div>
-      <div><dt>Transmisión</dt><dd>{{ detalle.datos.transmision | texto }}</dd></div>
-      <div><dt>SOAT</dt><dd>{{ detalle.datos.fechaVencSoat | fecha }} <app-estado [valor]="detalle.datos.estadoSoat" /></dd></div>
-      <div><dt>Revisión técnico-mecánica</dt><dd>{{ detalle.datos.fechaVencRtm | fecha }} <app-estado [valor]="detalle.datos.estadoRtm" /></dd></div>
-      <div><dt>Horas de clase</dt><dd>{{ detalle.datos.horasUso | numero: 0 }}</dd></div>
-      <div><dt>Clases programadas</dt><dd>{{ detalle.datos.clasesProgramadas }}</dd></div>
+      <div><dt>Placa<code class="col">placa</code></dt><dd>{{ detalle.datos.placa }}</dd></div>
+      <div><dt>Categoría<code class="col">codigo_categoria</code></dt><dd>{{ detalle.datos.codigoCategoria }}</dd></div>
+      <div><dt>Tipo<code class="col">tipo_vehiculo</code></dt><dd>{{ detalle.datos.tipoVehiculo | texto }}</dd></div>
+      <div><dt>Marca<code class="col">marca</code></dt><dd>{{ detalle.datos.marca }}</dd></div>
+      <div><dt>Línea<code class="col">linea</code></dt><dd>{{ detalle.datos.linea }}</dd></div>
+      <div><dt>Modelo<code class="col">modelo_anio</code></dt><dd>{{ detalle.datos.modeloAnio }}</dd></div>
+      <div><dt>Transmisión<code class="col">transmision</code></dt><dd>{{ detalle.datos.transmision | texto }}</dd></div>
+      <div><dt>Estado<code class="col">estado</code></dt><dd>{{ detalle.datos.estado | texto }}</dd></div>
+      <div><dt>SOAT<code class="col">fecha_venc_soat</code></dt><dd>{{ detalle.datos.fechaVencSoat | fecha }} <app-estado [valor]="detalle.datos.estadoSoat" /></dd></div>
+      <div><dt>Técnico-mecánica<code class="col">fecha_venc_rtm</code></dt><dd>{{ detalle.datos.fechaVencRtm | fecha }} <app-estado [valor]="detalle.datos.estadoRtm" /></dd></div>
     </dl>
   </section>
 
   <section class="bloque">
-    <h2>Últimas clases en este vehículo</h2>
+    <h2>Clases en este vehículo</h2>
     <app-tabla-clases [clases]="detalle.clases" vacio="Este vehículo no tiene clases registradas." />
   </section>
 }

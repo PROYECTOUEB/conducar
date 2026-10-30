@@ -3,26 +3,20 @@
 } @else if (!panel) {
   <p class="cargando" role="status">Cargando información…</p>
 } @else {
-  <h1>Panel del centro de enseñanza</h1>
-  <p class="sub">Estado actual de la escuela: próximas clases, alertas que requieren atención y uso de instructores.</p>
+  <h1>Panel</h1>
+  <p class="tablas-bd">Resumen de la base de datos <code>conducar</code></p>
 
-  <section class="instrumentos" aria-label="Indicadores principales">
-    <div class="instrumento"><div class="valor">{{ panel.kpi.alumnosActivos }}</div><div class="nombre">alumnos con matrícula activa</div></div>
-    <div class="instrumento"><div class="valor">{{ panel.kpi.horasDictadas | numero: 0 }}</div><div class="nombre">horas de clase dictadas</div></div>
-    <div class="instrumento"><div class="valor">{{ panel.kpi.tasaAprobacion | numero }}<small> %</small></div><div class="nombre">exámenes aprobados</div></div>
-    <div class="instrumento">
-      <div class="valor">{{ panel.kpi.vehiculosDisponibles }}<small> de {{ panel.kpi.vehiculos }}</small></div>
-      <div class="nombre">vehículos disponibles</div>
-    </div>
+  <section class="indicadores" aria-label="Indicadores principales">
+    <div class="indicador"><div class="valor">{{ panel.kpi.alumnosActivos }}</div><div class="nombre">Alumnos con matrícula activa</div></div>
+    <div class="indicador"><div class="valor">{{ panel.kpi.matriculasActivas }}</div><div class="nombre">Matrículas activas</div></div>
+    <div class="indicador"><div class="valor">{{ panel.kpi.horasDictadas | numero: 0 }}<small> h</small></div><div class="nombre">Horas de clase dictadas</div></div>
+    <div class="indicador"><div class="valor">{{ panel.kpi.clasesProgramadas }}</div><div class="nombre">Clases programadas</div></div>
+    <div class="indicador"><div class="valor">{{ panel.kpi.tasaAprobacion | numero }}<small> %</small></div><div class="nombre">Exámenes aprobados</div></div>
+    <div class="indicador"><div class="valor">{{ panel.kpi.vehiculosDisponibles }}<small> de {{ panel.kpi.vehiculos }}</small></div><div class="nombre">Vehículos disponibles</div></div>
+    <div class="indicador destacado"><div class="valor">{{ panel.kpi.saldoPendiente | pesos }}</div><div class="nombre">Saldo pendiente por cobrar</div></div>
   </section>
 
-  <section class="bloque">
-      <h2>Próximas clases</h2>
-      <app-tabla-clases [clases]="panel.proximas" vacio="No hay clases programadas." />
-      <p style="margin:14px 0 0"><a routerLink="/clases" [queryParams]="{ estado: 'PROGRAMADA' }">Ver toda la agenda ({{ panel.kpi.clasesProgramadas }} clases programadas)</a></p>
-  </section>
-
-  <div>
+  <div class="rejilla dos-iguales">
     <section class="bloque">
       <h2>Alertas ({{ panel.alertas.length }})</h2>
       @if (panel.alertas.length) {
@@ -41,19 +35,26 @@
       } @else {
         <p class="vacio">No hay alertas activas.</p>
       }
-      <p class="det" style="margin-top:14px">Saldo pendiente de las matrículas activas: <strong>{{ panel.kpi.saldoPendiente | pesos }}</strong></p>
+    </section>
+    <section class="bloque">
+      <h2>Matrículas por categoría</h2>
+      <app-barras [items]="matriculasCategoria" />
     </section>
   </div>
 
-  <div class="rejilla mitad">
+  <section class="bloque">
+    <h2>Próximas clases</h2>
+    <app-tabla-clases [clases]="panel.proximas" vacio="No hay clases programadas." />
+    <p style="margin:14px 0 0"><a routerLink="/clases">Ver la agenda completa</a></p>
+  </section>
+
+  <div class="rejilla dos-iguales">
     <section class="bloque">
       <h2>Horas dictadas por instructor</h2>
       <app-barras [items]="horasInstructor" sufijo=" h" />
     </section>
     <section class="bloque">
-      <h2>Matrículas por categoría</h2>
-      <app-barras [items]="matriculasCategoria" />
-      <h3 style="margin-top:22px">Clases dictadas por mes</h3>
+      <h2>Clases dictadas por mes</h2>
       <app-barras [items]="clasesPorMes" />
     </section>
   </div>

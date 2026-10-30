@@ -5,6 +5,7 @@ export interface ClaseResumen {
   horaInicio: string | null;
   horas: number | null;
   estado: string | null;
+  idModulo: number | null;
   tipo: string | null;
   modulo: string | null;
   codigoCategoria: string | null;

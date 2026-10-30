@@ -1,9 +1,8 @@
 @if (error) {
   <app-error [mensaje]="error" />
 } @else {
-  <div class="encabezado">
-    <div><h1>Agenda de clases</h1><p class="sub">Clases teóricas, de taller y prácticas de todos los alumnos. Los filtros se aplican al cambiarlos; haga clic en una clase para ver al alumno.</p></div>
-  </div>
+  <h1>Agenda de clases</h1>
+  <p class="tablas-bd">Tablas: <code>clase</code><code>modulo</code><code>matricula</code><code>instructor</code></p>
 
   @if (catalogos) {
     <form class="filtros" (ngSubmit)="filtrar()">
@@ -33,7 +32,6 @@
       </label>
       <label>Desde <input type="date" name="desde" [(ngModel)]="filtro.desde" (change)="filtrar()"></label>
       <label>Hasta <input type="date" name="hasta" [(ngModel)]="filtro.hasta" (change)="filtrar()"></label>
-      <button class="btn" type="submit">Filtrar</button>
       <button class="btn sec" type="button" (click)="limpiar()">Quitar filtros</button>
     </form>
   }
@@ -41,7 +39,7 @@
   @if (!clases) {
     <p class="cargando" role="status">Cargando información…</p>
   } @else {
-    <p class="resultado-meta">{{ clases.length }} clases · {{ horasSeleccion | numero: 0 }} horas (sin contar canceladas). Se muestran como máximo 500.</p>
+    <p class="resultado-meta">{{ clases.length }} clases · {{ horasSeleccion | numero: 0 }} horas sin contar canceladas</p>
     <section class="bloque">
       <app-tabla-clases [clases]="clases" vacio="Ninguna clase coincide con los filtros." />
     </section>
