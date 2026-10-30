@@ -1,0 +1,254 @@
+[
+ {
+  "cat": "Recuperar datos con SELECT",
+  "q": "¿Qué categorías de licencia existen y para qué vehículos son?",
+  "sql": "SELECT codigo_categoria, descripcion, tipo_servicio FROM categoria_licencia;",
+  "exp": "Consulta de todas las filas de la tabla, proyectando tres columnas."
+ },
+ {
+  "cat": "Recuperar datos con SELECT",
+  "q": "¿Cuál es el nombre completo y el correo de cada instructor?",
+  "sql": "SELECT nombres, apellidos, correo FROM instructor;",
+  "exp": "Proyección de columnas de la tabla INSTRUCTOR."
+ },
+ {
+  "cat": "Recuperar datos con SELECT",
+  "q": "¿Qué tipos de vehículo tiene la escuela (sin repetir)?",
+  "sql": "SELECT DISTINCT tipo_vehiculo FROM vehiculo;",
+  "exp": "DISTINCT elimina los valores repetidos."
+ },
+ {
+  "cat": "Recuperar datos con SELECT",
+  "q": "¿Cuánto costaría cada curso ofrecido con un incremento del 10 %?",
+  "sql": "SELECT codigo_categoria, valor_curso, valor_curso * 1.10 AS valor_con_incremento FROM categoria_licencia WHERE valor_curso IS NOT NULL;",
+  "exp": "Expresión aritmética con alias de columna."
+ },
+ {
+  "cat": "Restringir y ordenar datos",
+  "q": "¿Qué vehículos están disponibles para clases, ordenados por categoría?",
+  "sql": "SELECT placa, codigo_categoria, marca, linea FROM vehiculo WHERE estado = 'DISPONIBLE' ORDER BY codigo_categoria, placa;",
+  "exp": "WHERE filtra por estado y ORDER BY ordena el resultado."
+ },
+ {
+  "cat": "Restringir y ordenar datos",
+  "q": "¿Qué matrículas se hicieron entre marzo y junio de 2026?",
+  "sql": "SELECT id_matricula, id_alumno, codigo_categoria, fecha_matricula FROM matricula WHERE fecha_matricula BETWEEN '2026-03-01' AND '2026-06-30' ORDER BY fecha_matricula;",
+  "exp": "BETWEEN incluye los dos extremos del rango de fechas."
+ },
+ {
+  "cat": "Restringir y ordenar datos",
+  "q": "¿Qué alumnos tienen apellido que empieza por \"Ro\"?",
+  "sql": "SELECT nombres, apellidos FROM alumno WHERE apellidos LIKE 'Ro%' ORDER BY apellidos;",
+  "exp": "LIKE con el comodín % busca un patrón de texto."
+ },
+ {
+  "cat": "Restringir y ordenar datos",
+  "q": "¿Qué pagos se hicieron en efectivo o con tarjeta por más de 500.000 pesos?",
+  "sql": "SELECT id_pago, id_matricula, valor, medio_pago FROM pago WHERE medio_pago IN ('EFECTIVO', 'TARJETA') AND valor > 500000 ORDER BY valor DESC;",
+  "exp": "IN compara contra una lista de valores; AND combina condiciones."
+ },
+ {
+  "cat": "Restringir y ordenar datos",
+  "q": "¿Qué alumnos no tienen teléfono registrado?",
+  "sql": "SELECT id_alumno, nombres, apellidos FROM alumno WHERE telefono IS NULL;",
+  "exp": "IS NULL identifica valores ausentes."
+ },
+ {
+  "cat": "Restringir y ordenar datos",
+  "q": "¿Qué exámenes obtuvieron un puntaje menor a 80 (no aprobados)?",
+  "sql": "SELECT id_examen, id_matricula, tipo, puntaje FROM examen WHERE puntaje < 80 ORDER BY puntaje;",
+  "exp": "Se aprueba con 80 puntos o más; se filtran los puntajes inferiores."
+ },
+ {
+  "cat": "Funciones de una sola fila",
+  "q": "¿Cuál es el nombre completo en mayúsculas de cada alumno?",
+  "sql": "SELECT id_alumno, UPPER(CONCAT(nombres, ' ', apellidos)) AS nombre_completo FROM alumno ORDER BY id_alumno;",
+  "exp": "CONCAT une textos y UPPER los pasa a mayúsculas."
+ },
+ {
+  "cat": "Funciones de una sola fila",
+  "q": "¿Cuáles son las tres primeras letras de la marca de cada vehículo y la longitud de su línea?",
+  "sql": "SELECT placa, SUBSTR(marca, 1, 3) AS inicial_marca, linea, LENGTH(linea) AS largo_linea FROM vehiculo;",
+  "exp": "SUBSTR extrae parte del texto y LENGTH cuenta sus caracteres."
+ },
+ {
+  "cat": "Funciones de una sola fila",
+  "q": "¿Cuál es el valor de cada pago redondeado a miles?",
+  "sql": "SELECT id_pago, valor, ROUND(valor, -3) AS valor_redondeado FROM pago ORDER BY id_pago;",
+  "exp": "ROUND con posición negativa redondea a miles."
+ },
+ {
+  "cat": "Funciones de una sola fila",
+  "q": "¿En qué año y mes se matriculó cada alumno?",
+  "sql": "SELECT id_matricula, fecha_matricula, EXTRACT(YEAR FROM fecha_matricula) AS anio, EXTRACT(MONTH FROM fecha_matricula) AS mes FROM matricula ORDER BY fecha_matricula;",
+  "exp": "EXTRACT obtiene partes de una fecha."
+ },
+ {
+  "cat": "Funciones de una sola fila",
+  "q": "¿Qué vehículos tienen el SOAT vencido o por vencer en los próximos 30 días?",
+  "sql": "SELECT placa, marca, linea, fecha_venc_soat FROM vehiculo WHERE fecha_venc_soat <= CURRENT_DATE + INTERVAL '30' DAY ORDER BY fecha_venc_soat;",
+  "exp": "CURRENT_DATE es la fecha de hoy; se le suma un intervalo de 30 días."
+ },
+ {
+  "cat": "Conversión y expresiones condicionales",
+  "q": "¿Cuál es el resultado (aprobado o reprobado) de cada examen?",
+  "sql": "SELECT id_examen, tipo, puntaje, CASE WHEN puntaje >= 80 THEN 'APROBADO' ELSE 'REPROBADO' END AS resultado FROM examen ORDER BY id_examen;",
+  "exp": "CASE devuelve un texto según una condición. El resultado no se guarda porque depende del puntaje (atributo derivado)."
+ },
+ {
+  "cat": "Conversión y expresiones condicionales",
+  "q": "¿Qué valor tiene cada curso? (mostrar \"No ofrecido\" cuando no tiene valor)",
+  "sql": "SELECT codigo_categoria, COALESCE(CAST(valor_curso AS CHAR(12)), 'No ofrecido') AS valor FROM categoria_licencia;",
+  "exp": "CAST convierte el número a texto y COALESCE reemplaza los valores nulos."
+ },
+ {
+  "cat": "Conversión y expresiones condicionales",
+  "q": "¿Qué vehículos usan placa de moto y cuáles de carro?",
+  "sql": "SELECT placa, tipo_vehiculo, CASE WHEN LENGTH(placa) = 6 AND tipo_vehiculo = 'MOTOCICLETA' THEN 'Placa de moto (AAA00A)' ELSE 'Placa de carro (AAA000)' END AS formato FROM vehiculo;",
+  "exp": "Expresión condicional con varias condiciones."
+ },
+ {
+  "cat": "Funciones de grupo (GROUP BY y HAVING)",
+  "q": "¿Cuántos alumnos hay matriculados en cada categoría?",
+  "sql": "SELECT codigo_categoria, COUNT(*) AS matriculas FROM matricula GROUP BY codigo_categoria ORDER BY matriculas DESC;",
+  "exp": "COUNT cuenta las filas de cada grupo."
+ },
+ {
+  "cat": "Funciones de grupo (GROUP BY y HAVING)",
+  "q": "¿Cuántas horas tiene en total el curso de cada categoría?",
+  "sql": "SELECT codigo_categoria, SUM(horas) AS total_horas FROM plan_curso GROUP BY codigo_categoria;",
+  "exp": "SUM suma las horas de los módulos de cada plan."
+ },
+ {
+  "cat": "Funciones de grupo (GROUP BY y HAVING)",
+  "q": "¿Cuál es el puntaje promedio, mínimo y máximo por tipo de examen?",
+  "sql": "SELECT tipo, ROUND(AVG(puntaje), 2) AS promedio, MIN(puntaje) AS minimo, MAX(puntaje) AS maximo FROM examen GROUP BY tipo;",
+  "exp": "AVG, MIN y MAX por grupo."
+ },
+ {
+  "cat": "Funciones de grupo (GROUP BY y HAVING)",
+  "q": "¿Cuántas horas de clase ha dictado cada instructor?",
+  "sql": "SELECT id_instructor, SUM(horas) AS horas_dictadas FROM clase WHERE estado = 'DICTADA' GROUP BY id_instructor ORDER BY horas_dictadas DESC;",
+  "exp": "Primero se filtran las clases dictadas y luego se agrupa."
+ },
+ {
+  "cat": "Funciones de grupo (GROUP BY y HAVING)",
+  "q": "¿Qué matrículas han pagado menos del valor pactado?",
+  "sql": "SELECT m.id_matricula, m.valor_pactado, SUM(p.valor) AS pagado FROM matricula m JOIN pago p ON m.id_matricula = p.id_matricula GROUP BY m.id_matricula, m.valor_pactado HAVING SUM(p.valor) < m.valor_pactado;",
+  "exp": "HAVING filtra los grupos después de agrupar."
+ },
+ {
+  "cat": "Funciones de grupo (GROUP BY y HAVING)",
+  "q": "¿Qué vehículos se han usado en más de 100 horas de clase?",
+  "sql": "SELECT placa, SUM(horas) AS horas FROM clase WHERE placa IS NOT NULL AND estado = 'DICTADA' GROUP BY placa HAVING SUM(horas) > 100 ORDER BY horas DESC;",
+  "exp": "Agrupación por vehículo con condición sobre el total."
+ },
+ {
+  "cat": "Mostrar datos de varias tablas (JOIN)",
+  "q": "¿Qué alumno está inscrito en cada matrícula y en qué categoría?",
+  "sql": "SELECT m.id_matricula, a.nombres, a.apellidos, c.codigo_categoria, c.descripcion FROM matricula m JOIN alumno a ON m.id_alumno = a.id_alumno JOIN categoria_licencia c ON m.codigo_categoria = c.codigo_categoria ORDER BY m.id_matricula;",
+  "exp": "Reunión de tres tablas por sus llaves foráneas."
+ },
+ {
+  "cat": "Mostrar datos de varias tablas (JOIN)",
+  "q": "¿Qué módulos (materias) componen el curso B1 y cuántas horas tiene cada uno?",
+  "sql": "SELECT md.tipo, md.nombre, p.horas FROM plan_curso p JOIN modulo md ON p.id_modulo = md.id_modulo WHERE p.codigo_categoria = 'B1' ORDER BY md.tipo, md.nombre;",
+  "exp": "Reunión con la tabla asociativa PLAN_CURSO."
+ },
+ {
+  "cat": "Mostrar datos de varias tablas (JOIN)",
+  "q": "¿Qué instructores están habilitados para enseñar cada categoría?",
+  "sql": "SELECT ic.codigo_categoria, i.nombres, i.apellidos, ic.fecha_habilitacion FROM instructor_categoria ic JOIN instructor i ON ic.id_instructor = i.id_instructor ORDER BY ic.codigo_categoria, i.apellidos;",
+  "exp": "Relación muchos a muchos resuelta con INSTRUCTOR_CATEGORIA."
+ },
+ {
+  "cat": "Mostrar datos de varias tablas (JOIN)",
+  "q": "¿Qué clases prácticas están programadas, con instructor y vehículo?",
+  "sql": "SELECT cl.fecha, cl.hora_inicio, md.nombre AS modulo, i.apellidos AS instructor, v.placa, v.marca FROM clase cl JOIN modulo md ON cl.id_modulo = md.id_modulo JOIN instructor i ON cl.id_instructor = i.id_instructor JOIN vehiculo v ON cl.placa = v.placa WHERE cl.estado = 'PROGRAMADA' AND md.tipo = 'PRACTICA' ORDER BY cl.fecha, cl.hora_inicio;",
+  "exp": "Reunión de cuatro tablas con condiciones."
+ },
+ {
+  "cat": "Mostrar datos de varias tablas (JOIN)",
+  "q": "¿Cuál es el certificado de aptitud de cada matrícula, incluidas las que aún no lo tienen?",
+  "sql": "SELECT m.id_matricula, m.estado, ca.numero_certificado, ca.fecha_expedicion FROM matricula m LEFT JOIN certificado_aptitud ca ON m.id_matricula = ca.id_matricula ORDER BY m.id_matricula;",
+  "exp": "LEFT JOIN conserva las matrículas sin certificado (columnas en NULL)."
+ },
+ {
+  "cat": "Mostrar datos de varias tablas (JOIN)",
+  "q": "¿Qué alumnos no tienen ningún certificado del CRC?",
+  "sql": "SELECT a.id_alumno, a.nombres, a.apellidos FROM alumno a LEFT JOIN certificado_crc c ON a.id_alumno = c.id_alumno WHERE c.id_certificado IS NULL;",
+  "exp": "LEFT JOIN + IS NULL encuentra filas sin pareja en la otra tabla."
+ },
+ {
+  "cat": "Mostrar datos de varias tablas (JOIN)",
+  "q": "¿Qué pares de vehículos son de la misma marca?",
+  "sql": "SELECT v1.placa, v2.placa, v1.marca FROM vehiculo v1 JOIN vehiculo v2 ON v1.marca = v2.marca AND v1.placa < v2.placa;",
+  "exp": "Autorreunión (self join) de la tabla VEHICULO consigo misma."
+ },
+ {
+  "cat": "Subconsultas",
+  "q": "¿Qué cursos cuestan más que el curso B1?",
+  "sql": "SELECT codigo_categoria, valor_curso FROM categoria_licencia WHERE valor_curso > (SELECT valor_curso FROM categoria_licencia WHERE codigo_categoria = 'B1');",
+  "exp": "Subconsulta de una sola fila."
+ },
+ {
+  "cat": "Subconsultas",
+  "q": "¿Qué alumnos tienen una matrícula activa?",
+  "sql": "SELECT id_alumno, nombres, apellidos FROM alumno WHERE id_alumno IN (SELECT id_alumno FROM matricula WHERE estado = 'ACTIVA') ORDER BY apellidos;",
+  "exp": "Subconsulta de varias filas con IN."
+ },
+ {
+  "cat": "Subconsultas",
+  "q": "¿Qué exámenes tienen un puntaje mayor que el promedio de todos los exámenes?",
+  "sql": "SELECT id_examen, tipo, puntaje FROM examen WHERE puntaje > (SELECT AVG(puntaje) FROM examen) ORDER BY puntaje DESC;",
+  "exp": "Subconsulta con función de grupo."
+ },
+ {
+  "cat": "Subconsultas",
+  "q": "¿Qué instructor ha dictado más horas de clase?",
+  "sql": "SELECT id_instructor, SUM(horas) AS horas FROM clase WHERE estado = 'DICTADA' GROUP BY id_instructor HAVING SUM(horas) >= ALL (SELECT SUM(horas) FROM clase WHERE estado = 'DICTADA' GROUP BY id_instructor);",
+  "exp": "Subconsulta en HAVING con el operador ALL."
+ },
+ {
+  "cat": "Subconsultas",
+  "q": "¿Qué alumnos completaron todas las horas de su curso?",
+  "sql": "SELECT m.id_matricula, m.id_alumno, m.codigo_categoria FROM matricula m WHERE (SELECT SUM(cl.horas) FROM clase cl WHERE cl.id_matricula = m.id_matricula AND cl.estado = 'DICTADA') >= (SELECT SUM(p.horas) FROM plan_curso p WHERE p.codigo_categoria = m.codigo_categoria) ORDER BY m.id_matricula;",
+  "exp": "Subconsultas correlacionadas: comparan horas dictadas contra las del plan."
+ },
+ {
+  "cat": "Subconsultas",
+  "q": "¿Qué instructores están habilitados en todas las categorías que ofrece la escuela?",
+  "sql": "SELECT i.nombres, i.apellidos FROM instructor i JOIN instructor_categoria ic ON i.id_instructor = ic.id_instructor GROUP BY i.id_instructor, i.nombres, i.apellidos HAVING COUNT(*) = (SELECT COUNT(*) FROM categoria_licencia WHERE valor_curso IS NOT NULL);",
+  "exp": "Se cuentan las categorías de cada instructor y se comparan con el total ofrecido."
+ },
+ {
+  "cat": "Operadores de conjuntos",
+  "q": "¿Qué categorías se han usado en matrículas o en vehículos?",
+  "sql": "SELECT codigo_categoria FROM matricula UNION SELECT codigo_categoria FROM vehiculo;",
+  "exp": "UNION une los resultados sin repetir."
+ },
+ {
+  "cat": "Operadores de conjuntos",
+  "q": "¿Qué alumnos tienen una matrícula finalizada y también una activa?",
+  "sql": "SELECT id_alumno FROM matricula WHERE estado = 'FINALIZADA' INTERSECT SELECT id_alumno FROM matricula WHERE estado = 'ACTIVA';",
+  "exp": "INTERSECT devuelve las filas comunes a las dos consultas."
+ },
+ {
+  "cat": "Operadores de conjuntos",
+  "q": "¿Qué vehículos no tienen clases programadas?",
+  "sql": "SELECT placa FROM vehiculo EXCEPT SELECT placa FROM clase WHERE estado = 'PROGRAMADA' AND placa IS NOT NULL;",
+  "exp": "EXCEPT (MINUS en Oracle) devuelve las filas de la primera consulta que no están en la segunda."
+ },
+ {
+  "cat": "Operadores de conjuntos",
+  "q": "¿Qué categorías de licencia no ofrece la escuela (no tienen plan de estudios)?",
+  "sql": "SELECT codigo_categoria FROM categoria_licencia EXCEPT SELECT codigo_categoria FROM plan_curso;",
+  "exp": "Diferencia entre todas las categorías y las que tienen plan de curso."
+ },
+ {
+  "cat": "Operadores de conjuntos",
+  "q": "¿Qué fechas tuvieron exámenes teóricos y también exámenes prácticos?",
+  "sql": "SELECT fecha FROM examen WHERE tipo = 'TEORICO' INTERSECT SELECT fecha FROM examen WHERE tipo = 'PRACTICO' ORDER BY fecha;",
+  "exp": "Intersección de fechas entre dos tipos de examen."
+ }
+]

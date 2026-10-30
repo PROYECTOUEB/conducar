@@ -1,0 +1,37 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else if (!detalle) {
+  <p class="cargando" role="status">Cargando información…</p>
+} @else {
+  <a class="volver" routerLink="/vehiculos">Volver a vehículos</a>
+  <div class="encabezado">
+    <div>
+      <h1><span class="placa" [class.publico]="detalle.datos.codigoCategoria === 'C1'">{{ detalle.datos.placa }}</span></h1>
+      <p class="sub">{{ detalle.datos.marca }} {{ detalle.datos.linea }} · {{ detalle.datos.modeloAnio }} · categoría {{ detalle.datos.codigoCategoria }}</p>
+    </div>
+    <app-estado [valor]="detalle.datos.estado" />
+  </div>
+
+  <section class="bloque">
+    <dl class="ficha">
+      <div><dt>Tipo</dt><dd>{{ detalle.datos.tipoVehiculo | texto }}</dd></div>
+      <div><dt>Transmisión</dt><dd>{{ detalle.datos.transmision | texto }}</dd></div>
+      <div><dt>SOAT</dt><dd>{{ detalle.datos.fechaVencSoat | fecha }} <app-estado [valor]="detalle.datos.estadoSoat" /></dd></div>
+      <div><dt>Revisión técnico-mecánica</dt><dd>{{ detalle.datos.fechaVencRtm | fecha }} <app-estado [valor]="detalle.datos.estadoRtm" /></dd></div>
+      <div><dt>Horas de clase</dt><dd>{{ detalle.datos.horasUso | numero: 0 }}</dd></div>
+      <div><dt>Clases programadas</dt><dd>{{ detalle.datos.clasesProgramadas }}</dd></div>
+    </dl>
+  </section>
+
+  <section class="bloque">
+    <h2>Últimas clases en este vehículo</h2>
+    <app-leyenda />
+    <div class="tiras">
+      @for (c of detalle.clases; track c.idClase) {
+        <app-tira-clase [clase]="c" />
+      } @empty {
+        <p class="vacio">Este vehículo no tiene clases registradas.</p>
+      }
+    </div>
+  </section>
+}

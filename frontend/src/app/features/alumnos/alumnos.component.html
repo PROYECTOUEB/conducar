@@ -1,0 +1,46 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else {
+  <div class="encabezado">
+    <div>
+      <h1>Alumnos</h1>
+      <p class="sub">Seleccione un alumno para ver sus matrículas, el avance de horas, sus clases, exámenes y pagos.</p>
+    </div>
+  </div>
+  <form class="filtros" role="search" (ngSubmit)="buscar()">
+    <label>Buscar por nombre o documento
+      <input type="search" name="q" [(ngModel)]="texto" placeholder="Ej.: Rodríguez o 1012345678" autocomplete="off">
+    </label>
+    <button class="btn" type="submit">Buscar</button>
+  </form>
+
+  <section class="bloque">
+    @if (!alumnos) {
+      <p class="cargando" role="status">Cargando información…</p>
+    } @else if (!alumnos.length) {
+      <p class="vacio">No hay alumnos que coincidan con “{{ buscado }}”.</p>
+    } @else {
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Documento</th><th scope="col">Nombre</th><th scope="col">Curso activo</th>
+              <th scope="col" class="num">Horas dictadas</th><th scope="col">Examen CRC</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (a of alumnos; track a.idAlumno) {
+              <tr class="fila-enlace" tabindex="0" (click)="abrir(a)" (keydown.enter)="abrir(a)">
+                <td>{{ a.tipoDocumento }} {{ a.numeroDocumento }}</td>
+                <td>{{ a.nombres }} {{ a.apellidos }}</td>
+                <td>{{ a.categoriaActiva ? 'Categoría ' + a.categoriaActiva : 'Sin matrícula activa' }}</td>
+                <td class="num">{{ a.horasDictadas | numero: 0 }}</td>
+                <td><app-estado [valor]="a.estadoCrc" /></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+}

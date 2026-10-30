@@ -1,0 +1,28 @@
+<h1>Estado de la conexión</h1>
+@if (error) {
+  <div class="error-caja">
+    <p><strong>La aplicación no puede conectarse a la base de datos.</strong></p>
+    <p><code>{{ error }}</code></p>
+    <p>Revise que el servicio de MySQL esté activo, que el backend de Spring Boot esté en ejecución en el puerto 8080
+      y que el usuario y la contraseña de application.properties sean correctos.</p>
+  </div>
+} @else if (!estado) {
+  <p class="cargando" role="status">Verificando la conexión…</p>
+} @else {
+  <p class="sub">La aplicación está conectada a la base de datos y puede leer sus datos.</p>
+  <section class="bloque">
+    <dl class="ficha">
+      <div><dt>Base de datos</dt><dd>{{ estado.servidor.baseDatos }}</dd></div>
+      <div><dt>Usuario</dt><dd>{{ estado.servidor.usuario }}</dd></div>
+      <div><dt>Servidor</dt><dd>{{ estado.servidor.servidor }}:{{ estado.servidor.puerto }}</dd></div>
+      <div><dt>Hora del servidor</dt><dd>{{ estado.servidor.fechaServidor }}</dd></div>
+      <div><dt>Modo</dt><dd>{{ estado.servidor.soloLectura ? 'Solo lectura' : 'Lectura y escritura' }}</dd></div>
+      <div><dt>Tablas</dt><dd>{{ estado.tablas }}</dd></div>
+    </dl>
+    <p class="det" style="margin:16px 0 0">{{ estado.servidor.version }}</p>
+  </section>
+  <section class="bloque">
+    <h2>Registros en las tablas principales</h2>
+    <app-barras [items]="conteos" />
+  </section>
+}

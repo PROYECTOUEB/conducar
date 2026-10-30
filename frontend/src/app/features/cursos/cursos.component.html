@@ -1,0 +1,49 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else if (!cargado) {
+  <p class="cargando" role="status">Cargando información…</p>
+} @else {
+  <h1>Cursos y categorías de licencia</h1>
+  <p class="sub">Plan de estudios de cada curso que ofrece la escuela: módulos (materias) de teoría, taller y práctica con su intensidad horaria.</p>
+  @for (c of ofrecidas; track c.codigoCategoria) {
+    <section class="bloque">
+      <div class="encabezado" style="margin-bottom:12px">
+        <h2 style="margin:0">Categoría {{ c.codigoCategoria }}</h2>
+        <span class="det">{{ c.matriculasActivas }} matrículas activas de {{ c.matriculas }}</span>
+      </div>
+      <p style="margin-top:0">{{ c.descripcion }}.</p>
+      <dl class="ficha" style="margin-bottom:16px">
+        <div><dt>Servicio</dt><dd>{{ c.tipoServicio | texto }}</dd></div>
+        <div><dt>Edad mínima</dt><dd>{{ c.edadMinima }} años</dd></div>
+        <div><dt>Intensidad total</dt><dd>{{ c.horasTotales }} horas</dd></div>
+        <div><dt>Valor del curso</dt><dd>{{ c.valorCurso | pesos }}</dd></div>
+      </dl>
+      @for (t of tipos; track t) {
+        <h3>{{ t | tipoClase }} · {{ horas(c, t) }} h</h3>
+        <div class="tabla-envoltura">
+          <table>
+            <thead><tr><th scope="col">Módulo</th><th scope="col">Contenido</th><th scope="col" class="num">Horas</th></tr></thead>
+            <tbody>
+              @for (m of modulos(c, t); track m.idModulo) {
+                <tr><td><strong>{{ m.nombre }}</strong></td><td>{{ m.descripcion }}</td><td class="num">{{ m.horas }}</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+  }
+  <section class="bloque">
+    <h2>Otras categorías de licencia (no ofrecidas por la escuela)</h2>
+    <div class="tabla-envoltura">
+      <table>
+        <thead><tr><th scope="col">Categoría</th><th scope="col">Vehículos</th><th scope="col">Servicio</th><th scope="col" class="num">Edad mínima</th></tr></thead>
+        <tbody>
+          @for (c of otras; track c.codigoCategoria) {
+            <tr><td>{{ c.codigoCategoria }}</td><td>{{ c.descripcion }}</td><td>{{ c.tipoServicio | texto }}</td><td class="num">{{ c.edadMinima }}</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+}

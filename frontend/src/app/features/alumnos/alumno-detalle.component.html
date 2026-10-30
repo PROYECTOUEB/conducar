@@ -1,0 +1,111 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else if (!detalle) {
+  <p class="cargando" role="status">Cargando información…</p>
+} @else {
+  <a class="volver" routerLink="/alumnos">Volver a alumnos</a>
+  <div class="encabezado">
+    <div>
+      <h1>{{ detalle.datos.nombres }} {{ detalle.datos.apellidos }}</h1>
+      <p class="sub">{{ detalle.datos.tipoDocumento }} {{ detalle.datos.numeroDocumento }} · {{ detalle.datos.correo }}</p>
+    </div>
+    <app-estado [valor]="estadoCrc" />
+  </div>
+
+  <section class="bloque">
+    <dl class="ficha">
+      <div><dt>Edad</dt><dd>{{ detalle.datos.edad }} años</dd></div>
+      <div><dt>Teléfono</dt><dd>{{ detalle.datos.telefono || 'No registrado' }}</dd></div>
+      <div><dt>Fecha de nacimiento</dt><dd>{{ detalle.datos.fechaNacimiento | fecha }}</dd></div>
+      <div><dt>Registro en la escuela</dt><dd>{{ detalle.datos.fechaRegistro | fecha }}</dd></div>
+      <div><dt>Examen médico (CRC)</dt>
+        <dd>
+          @if (detalle.certificados.length) {
+            {{ detalle.certificados[0].nombreCrc }}, {{ detalle.certificados[0].fechaExamen | fecha }}
+          } @else { Sin examen: no puede iniciar clases }
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="bloque">
+    <h2>Matrículas y avance de horas</h2>
+    @for (m of detalle.matriculas; track m.idMatricula) {
+      <div class="matricula-item">
+        <div class="cabeza">
+          <strong>Categoría {{ m.codigoCategoria }} · {{ m.descripcion }}</strong>
+          <app-estado [valor]="m.estado" />
+        </div>
+        <div class="det">
+          Matrícula {{ m.idMatricula }} del {{ m.fechaMatricula | fecha }} · pagado {{ m.totalPagado | pesos }} de {{ m.valorPactado | pesos }}
+          @if (saldo(m) > 0) { · <strong>saldo {{ saldo(m) | pesos }}</strong> }
+          @if (m.numeroCertificado) { · certificado de aptitud {{ m.numeroCertificado }} }
+        </div>
+        @for (a of avances(m); track a.tipo) {
+          <div class="avance">
+            <span>{{ a.tipo }}</span>
+            <div class="progreso"><span [style.width.%]="porcentaje(a)"></span></div>
+            <span class="det">{{ a.dictadas }} / {{ a.plan }} h</span>
+          </div>
+        }
+      </div>
+    } @empty {
+      <p class="vacio">El alumno no tiene matrículas.</p>
+    }
+  </section>
+
+  <div class="rejilla mitad">
+    <section class="bloque">
+      <h2>Exámenes</h2>
+      @if (detalle.examenes.length) {
+        <div class="tabla-envoltura">
+          <table>
+            <thead><tr><th scope="col">Fecha</th><th scope="col">Tipo</th><th scope="col" class="num">Puntaje</th><th scope="col">Resultado</th></tr></thead>
+            <tbody>
+              @for (e of detalle.examenes; track e.idExamen) {
+                <tr>
+                  <td>{{ e.fecha | fecha }}</td>
+                  <td>{{ e.tipo | texto }} ({{ e.codigoCategoria }})</td>
+                  <td class="num">{{ e.puntaje | numero }}</td>
+                  <td><app-estado [valor]="e.resultado" /></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="det">Se aprueba con 80 puntos o más.</p>
+      } @else {
+        <p class="vacio">Aún no ha presentado exámenes.</p>
+      }
+    </section>
+    <section class="bloque">
+      <h2>Pagos</h2>
+      @if (detalle.pagos.length) {
+        <div class="tabla-envoltura">
+          <table>
+            <thead><tr><th scope="col">Fecha</th><th scope="col">Matrícula</th><th scope="col">Medio</th><th scope="col" class="num">Valor</th></tr></thead>
+            <tbody>
+              @for (p of detalle.pagos; track p.idPago) {
+                <tr><td>{{ p.fechaPago | fecha }}</td><td>{{ p.idMatricula }}</td><td>{{ p.medioPago | texto }}</td><td class="num">{{ p.valor | pesos }}</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <p class="vacio">No hay pagos registrados.</p>
+      }
+    </section>
+  </div>
+
+  <section class="bloque">
+    <h2>Clases ({{ detalle.clases.length }})</h2>
+    <app-leyenda />
+    <div class="tiras">
+      @for (c of detalle.clases; track c.idClase) {
+        <app-tira-clase [clase]="c" [mostrarAlumno]="false" />
+      } @empty {
+        <p class="vacio">Sin clases registradas.</p>
+      }
+    </div>
+  </section>
+}

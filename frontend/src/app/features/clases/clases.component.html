@@ -1,0 +1,54 @@
+@if (error) {
+  <app-error [mensaje]="error" />
+} @else {
+  <div class="encabezado">
+    <div><h1>Agenda de clases</h1><p class="sub">Clases teóricas, de taller y prácticas de todos los alumnos. Seleccione una clase para ver al alumno.</p></div>
+  </div>
+
+  @if (catalogos) {
+    <form class="filtros" (ngSubmit)="filtrar()">
+      <label>Estado
+        <select name="estado" [(ngModel)]="filtro.estado">
+          <option value="">Todos</option>
+          @for (e of catalogos.estadosClase; track e) { <option [value]="e">{{ e | texto }}</option> }
+        </select>
+      </label>
+      <label>Tipo
+        <select name="tipo" [(ngModel)]="filtro.tipo">
+          <option value="">Todos</option>
+          @for (t of catalogos.tiposClase; track t) { <option [value]="t">{{ t | tipoClase }}</option> }
+        </select>
+      </label>
+      <label>Instructor
+        <select name="instructor" [(ngModel)]="filtro.instructor">
+          <option value="">Todos</option>
+          @for (i of catalogos.instructores; track i.idInstructor) { <option [value]="'' + i.idInstructor">{{ i.nombre }}</option> }
+        </select>
+      </label>
+      <label>Vehículo
+        <select name="placa" [(ngModel)]="filtro.placa">
+          <option value="">Todos</option>
+          @for (p of catalogos.placas; track p) { <option [value]="p">{{ p }}</option> }
+        </select>
+      </label>
+      <label>Desde <input type="date" name="desde" [(ngModel)]="filtro.desde"></label>
+      <label>Hasta <input type="date" name="hasta" [(ngModel)]="filtro.hasta"></label>
+      <button class="btn" type="submit">Filtrar</button>
+      <button class="btn sec" type="button" (click)="limpiar()">Quitar filtros</button>
+    </form>
+  }
+
+  @if (!clases) {
+    <p class="cargando" role="status">Cargando información…</p>
+  } @else {
+    <p class="resultado-meta">{{ clases.length }} clases · {{ horasSeleccion | numero: 0 }} horas (sin contar canceladas). Se muestran como máximo 500.</p>
+    <app-leyenda />
+    <div class="tiras">
+      @for (c of clases; track c.idClase) {
+        <app-tira-clase [clase]="c" />
+      } @empty {
+        <p class="vacio">Ninguna clase coincide con los filtros.</p>
+      }
+    </div>
+  }
+}
