@@ -13,15 +13,15 @@
   <section class="bloque">
     <dl class="ficha">
       <div><dt>Placa<code class="col">placa</code></dt><dd>{{ detalle.datos.placa }}</dd></div>
-      <div><dt>Categoría<code class="col">codigo_categoria</code></dt><dd>{{ detalle.datos.codigoCategoria }}</dd></div>
-      <div><dt>Tipo<code class="col">tipo_vehiculo</code></dt><dd>{{ detalle.datos.tipoVehiculo | texto }}</dd></div>
+      <div><dt>Categoría<code class="col">codigo_<wbr>categoria</code></dt><dd>{{ detalle.datos.codigoCategoria }}</dd></div>
+      <div><dt>Tipo<code class="col">tipo_<wbr>vehiculo</code></dt><dd>{{ detalle.datos.tipoVehiculo | texto }}</dd></div>
       <div><dt>Marca<code class="col">marca</code></dt><dd>{{ detalle.datos.marca }}</dd></div>
       <div><dt>Línea<code class="col">linea</code></dt><dd>{{ detalle.datos.linea }}</dd></div>
-      <div><dt>Modelo<code class="col">modelo_anio</code></dt><dd>{{ detalle.datos.modeloAnio }}</dd></div>
+      <div><dt>Modelo<code class="col">modelo_<wbr>anio</code></dt><dd>{{ detalle.datos.modeloAnio }}</dd></div>
       <div><dt>Transmisión<code class="col">transmision</code></dt><dd>{{ detalle.datos.transmision | texto }}</dd></div>
       <div><dt>Estado<code class="col">estado</code></dt><dd>{{ detalle.datos.estado | texto }}</dd></div>
-      <div><dt>SOAT<code class="col">fecha_venc_soat</code></dt><dd>{{ detalle.datos.fechaVencSoat | fecha }} <app-estado [valor]="detalle.datos.estadoSoat" /></dd></div>
-      <div><dt>Técnico-mecánica<code class="col">fecha_venc_rtm</code></dt><dd>{{ detalle.datos.fechaVencRtm | fecha }} <app-estado [valor]="detalle.datos.estadoRtm" /></dd></div>
+      <div><dt>SOAT<code class="col">fecha_<wbr>venc_<wbr>soat</code></dt><dd>{{ detalle.datos.fechaVencSoat | fecha }} <app-estado [valor]="detalle.datos.estadoSoat" /></dd></div>
+      <div><dt>Técnico-mecánica<code class="col">fecha_<wbr>venc_<wbr>rtm</code></dt><dd>{{ detalle.datos.fechaVencRtm | fecha }} <app-estado [valor]="detalle.datos.estadoRtm" /></dd></div>
     </dl>
   </section>
 

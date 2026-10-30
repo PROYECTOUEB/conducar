@@ -1,16 +1,25 @@
 <aside class="lateral" [class.abierto]="menuAbierto" id="lateral">
-  <a class="marca" routerLink="/panel" aria-label="ConduCar, ir al panel">
-    <img src="logo.svg" alt="" width="34" height="34">
-    <span>ConduCar</span>
-  </a>
+  <div class="cabecera-menu">
+    <a class="marca" routerLink="/panel" aria-label="ConduCar, ir al panel">
+      <img src="logo.svg" alt="" width="34" height="34">
+      <span class="texto-menu">ConduCar</span>
+    </a>
+    <button class="plegar" type="button" (click)="alternarMenu()"
+            [attr.aria-label]="plegado ? 'Desplegar el menú' : 'Plegar el menú'" [attr.title]="plegado ? 'Desplegar el menú' : 'Plegar el menú'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="plegado ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6'" /></svg>
+    </button>
+  </div>
   <nav aria-label="Secciones">
     @for (s of secciones; track s.ruta) {
-      <a [routerLink]="s.ruta" routerLinkActive="activo" ariaCurrentWhenActive="page">{{ s.nombre }}</a>
+      <a [routerLink]="s.ruta" routerLinkActive="activo" ariaCurrentWhenActive="page" [attr.title]="plegado ? s.nombre : null">
+        <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="s.icono" /></svg>
+        <span class="texto-menu">{{ s.nombre }}</span>
+      </a>
     }
   </nav>
   <a class="conexion" [class.ok]="conexion === 'ok'" [class.error]="conexion === 'error'"
-     routerLink="/estado" routerLinkActive="activo" ariaCurrentWhenActive="page">
-    <span class="punto" aria-hidden="true"></span><span>{{ textoConexion }}</span>
+     routerLink="/estado" routerLinkActive="activo" ariaCurrentWhenActive="page" [attr.title]="textoConexion">
+    <span class="punto" aria-hidden="true"></span><span class="texto-menu">{{ textoConexion }}</span>
   </a>
 </aside>
 <button class="menu" type="button" aria-controls="lateral" [attr.aria-expanded]="menuAbierto"

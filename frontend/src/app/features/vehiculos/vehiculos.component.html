@@ -11,16 +11,14 @@
         <thead>
           <tr>
             <th scope="col">Placa<code class="col">placa</code></th>
-            <th scope="col">Categoría<code class="col">codigo_categoria</code></th>
-            <th scope="col">Tipo<code class="col">tipo_vehiculo</code></th>
-            <th scope="col">Marca<code class="col">marca</code></th>
-            <th scope="col">Línea<code class="col">linea</code></th>
-            <th scope="col" class="num">Modelo<code class="col">modelo_anio</code></th>
+            <th scope="col">Categoría<code class="col">codigo_<wbr>categoria</code></th>
+            <th scope="col">Vehículo<code class="col">tipo_<wbr>vehiculo</code><code class="col">marca, linea</code></th>
+            <th scope="col" class="num">Modelo<code class="col">modelo_<wbr>anio</code></th>
             <th scope="col">Transmisión<code class="col">transmision</code></th>
             <th scope="col">Estado<code class="col">estado</code></th>
-            <th scope="col">SOAT<code class="col">fecha_venc_soat</code></th>
-            <th scope="col">Técnico-mecánica<code class="col">fecha_venc_rtm</code></th>
-            <th scope="col" class="num">Horas de uso<code class="col calc">SUM(clase.horas)</code></th>
+            <th scope="col">SOAT<code class="col">fecha_<wbr>venc_<wbr>soat</code></th>
+            <th scope="col">Técnico-mecánica<code class="col">fecha_<wbr>venc_<wbr>rtm</code></th>
+            <th scope="col" class="num">Horas de uso<code class="col calc">SUM(clase.<wbr>horas)</code></th>
           </tr>
         </thead>
         <tbody>
@@ -28,9 +26,7 @@
             <tr class="fila-enlace" tabindex="0" (click)="abrir(v)" (keydown.enter)="abrir(v)">
               <td><span class="placa" [class.publico]="v.codigoCategoria === 'C1'">{{ v.placa }}</span></td>
               <td><strong>{{ v.codigoCategoria }}</strong></td>
-              <td>{{ v.tipoVehiculo | texto }}</td>
-              <td>{{ v.marca }}</td>
-              <td>{{ v.linea }}</td>
+              <td>{{ v.tipoVehiculo | texto }}<span class="linea2">{{ v.marca }} {{ v.linea }}</span></td>
               <td class="num">{{ v.modeloAnio }}</td>
               <td>{{ v.transmision | texto }}</td>
               <td><app-estado [valor]="v.estado" /></td>

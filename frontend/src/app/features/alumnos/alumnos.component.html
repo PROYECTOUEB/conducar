@@ -20,29 +20,23 @@
         <table>
           <thead>
             <tr>
-              <th scope="col" class="num">N.°<code class="col">id_alumno</code></th>
-              <th scope="col">Tipo doc.<code class="col">tipo_documento</code></th>
-              <th scope="col">Documento<code class="col">numero_documento</code></th>
-              <th scope="col">Nombres<code class="col">nombres</code></th>
-              <th scope="col">Apellidos<code class="col">apellidos</code></th>
-              <th scope="col">Nacimiento<code class="col">fecha_nacimiento</code></th>
-              <th scope="col">Teléfono<code class="col">telefono</code></th>
-              <th scope="col">Correo<code class="col">correo</code></th>
-              <th scope="col">Registro<code class="col">fecha_registro</code></th>
-              <th scope="col">Examen CRC<code class="col">certificado_crc.resultado</code></th>
+              <th scope="col" class="num">N.°<code class="col">id_<wbr>alumno</code></th>
+              <th scope="col">Documento<code class="col">tipo_<wbr>documento</code><code class="col">numero_<wbr>documento</code></th>
+              <th scope="col">Nombre<code class="col">nombres</code><code class="col">apellidos</code></th>
+              <th scope="col">Nacimiento<code class="col">fecha_<wbr>nacimiento</code></th>
+              <th scope="col">Contacto<code class="col">telefono</code><code class="col">correo</code></th>
+              <th scope="col">Registro<code class="col">fecha_<wbr>registro</code></th>
+              <th scope="col">Examen CRC<code class="col">certificado_<wbr>crc.<wbr>resultado</code></th>
             </tr>
           </thead>
           <tbody>
             @for (a of alumnos; track a.idAlumno) {
               <tr class="fila-enlace" tabindex="0" (click)="abrir(a)" (keydown.enter)="abrir(a)">
                 <td class="num">{{ a.idAlumno }}</td>
-                <td>{{ a.tipoDocumento }}</td>
-                <td>{{ a.numeroDocumento }}</td>
-                <td>{{ a.nombres }}</td>
-                <td>{{ a.apellidos }}</td>
+                <td>{{ a.tipoDocumento }}<span class="linea2">{{ a.numeroDocumento }}</span></td>
+                <td><strong>{{ a.nombres }}</strong><span class="linea2">{{ a.apellidos }}</span></td>
                 <td>{{ a.fechaNacimiento | fecha }}</td>
-                <td>{{ a.telefono || 'NULL' }}</td>
-                <td>{{ a.correo }}</td>
+                <td>{{ a.telefono || 'NULL' }}<span class="linea2 correo">{{ a.correo }}</span></td>
                 <td>{{ a.fechaRegistro | fecha }}</td>
                 <td><app-estado [valor]="a.estadoCrc" /></td>
               </tr>
