@@ -1,6 +1,6 @@
--- ConduLog: consultas SQL de ejemplo (temas del curso)
+-- ConduCar: consultas SQL de ejemplo (temas del curso)
 
-USE condulog;
+USE conducar;
 
 -- 1. [Recuperar datos con SELECT] ¿Qué categorías de licencia existen y para qué vehículos son?
 SELECT codigo_categoria, descripcion, tipo_servicio FROM categoria_licencia;

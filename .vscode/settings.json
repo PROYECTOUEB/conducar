@@ -6,11 +6,11 @@
   },
   "sqltools.connections": [
     {
-      "name": "ConduLog (MySQL)",
+      "name": "ConduCar (MySQL)",
       "driver": "MySQL",
       "server": "127.0.0.1",
       "port": 3306,
-      "database": "condulog",
+      "database": "conducar",
       "username": "consultor",
       "askForPassword": true,
       "previewLimit": 50

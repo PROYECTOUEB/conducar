@@ -3,10 +3,10 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Backend ConduLog (Spring Boot)",
+      "name": "Backend ConduCar (Spring Boot)",
       "request": "launch",
-      "mainClass": "co.edu.unbosque.condulog.CondulogApplication",
-      "projectName": "condulog"
+      "mainClass": "co.edu.unbosque.conducar.ConducarApplication",
+      "projectName": "conducar"
     }
   ]
 }

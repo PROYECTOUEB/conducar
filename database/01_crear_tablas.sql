@@ -1,8 +1,8 @@
--- ConduLog: creación de la base de datos y las tablas
+-- ConduCar: creación de la base de datos y las tablas
 
-DROP DATABASE IF EXISTS condulog;
-CREATE DATABASE condulog;
-USE condulog;
+DROP DATABASE IF EXISTS conducar;
+CREATE DATABASE conducar;
+USE conducar;
 
 CREATE TABLE categoria_licencia (
   codigo_categoria VARCHAR(2) PRIMARY KEY,

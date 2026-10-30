@@ -1,6 +1,6 @@
--- ConduLog: datos de prueba
+-- ConduCar: datos de prueba
 
-USE condulog;
+USE conducar;
 
 INSERT INTO categoria_licencia (codigo_categoria, descripcion, tipo_servicio, edad_minima, valor_curso) VALUES
 ('A1', 'Motocicletas con cilindrada hasta 125 c.c.', 'PARTICULAR', 16, NULL),
@@ -136,15 +136,15 @@ INSERT INTO certificado_crc (id_certificado, id_alumno, nombre_crc, fecha_examen
 (59, 57, 'CRC Conducir Sano Chapinero', '2026-09-23', 'APTO');
 
 INSERT INTO instructor (id_instructor, numero_documento, nombres, apellidos, telefono, correo, numero_licencia_instructor, fecha_venc_licencia, estado) VALUES
-(1, '79334130', 'Óscar', 'Jiménez Suárez', '3198056747', 'oscar.jimenez@condulog.edu.co', 'INS-2037', '2027-08-31', 'ACTIVO'),
-(2, '79887507', 'Ana María', 'Cárdenas Medina', '3198400346', 'ana.cardenas@condulog.edu.co', 'INS-2074', '2028-10-01', 'ACTIVO'),
-(3, '79956436', 'Samuel', 'González Martínez', '3118543956', 'samuel.gonzalez@condulog.edu.co', 'INS-2111', '2026-11-23', 'ACTIVO'),
-(4, '79516512', 'Miguel Ángel', 'Romero Díaz', '3146832730', 'miguel.romero@condulog.edu.co', 'INS-2148', '2027-12-19', 'ACTIVO'),
-(5, '79768695', 'Andrea', 'Castillo Rojas', '3116710873', 'andrea.castillo@condulog.edu.co', 'INS-2185', '2028-10-24', 'ACTIVO'),
-(6, '79776116', 'Jorge', 'Pérez Moreno', '3196184138', 'jorge.perez@condulog.edu.co', 'INS-2222', '2027-10-09', 'ACTIVO'),
-(7, '79195089', 'Julián', 'Torres Moreno', '3169362688', 'julian.torres@condulog.edu.co', 'INS-2259', '2026-10-15', 'ACTIVO'),
-(8, '79614883', 'Catalina', 'Jiménez Castillo', '3169802211', 'catalina.jimenez@condulog.edu.co', 'INS-2296', '2029-01-21', 'ACTIVO'),
-(9, '79637866', 'Diego', 'Castro Beltrán', '3181425740', 'diego.castro@condulog.edu.co', 'INS-2333', '2028-09-19', 'INACTIVO');
+(1, '79334130', 'Óscar', 'Jiménez Suárez', '3198056747', 'oscar.jimenez@conducar.edu.co', 'INS-2037', '2027-08-31', 'ACTIVO'),
+(2, '79887507', 'Ana María', 'Cárdenas Medina', '3198400346', 'ana.cardenas@conducar.edu.co', 'INS-2074', '2028-10-01', 'ACTIVO'),
+(3, '79956436', 'Samuel', 'González Martínez', '3118543956', 'samuel.gonzalez@conducar.edu.co', 'INS-2111', '2026-11-23', 'ACTIVO'),
+(4, '79516512', 'Miguel Ángel', 'Romero Díaz', '3146832730', 'miguel.romero@conducar.edu.co', 'INS-2148', '2027-12-19', 'ACTIVO'),
+(5, '79768695', 'Andrea', 'Castillo Rojas', '3116710873', 'andrea.castillo@conducar.edu.co', 'INS-2185', '2028-10-24', 'ACTIVO'),
+(6, '79776116', 'Jorge', 'Pérez Moreno', '3196184138', 'jorge.perez@conducar.edu.co', 'INS-2222', '2027-10-09', 'ACTIVO'),
+(7, '79195089', 'Julián', 'Torres Moreno', '3169362688', 'julian.torres@conducar.edu.co', 'INS-2259', '2026-10-15', 'ACTIVO'),
+(8, '79614883', 'Catalina', 'Jiménez Castillo', '3169802211', 'catalina.jimenez@conducar.edu.co', 'INS-2296', '2029-01-21', 'ACTIVO'),
+(9, '79637866', 'Diego', 'Castro Beltrán', '3181425740', 'diego.castro@conducar.edu.co', 'INS-2333', '2028-09-19', 'INACTIVO');
 
 INSERT INTO instructor_categoria (id_instructor, codigo_categoria, fecha_habilitacion) VALUES
 (1, 'A2', '2023-04-07'),

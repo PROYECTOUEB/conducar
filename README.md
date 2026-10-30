@@ -1,10 +1,10 @@
-# ConduLog – Sistema de información para un Centro de Enseñanza Automovilística
+# ConduCar – Sistema de información para un Centro de Enseñanza Automovilística
 
 Proyecto final de **Bases de Datos 1** – Universidad El Bosque, Bogotá.
 Integrantes: Nicolás Rincón, Laura Morales, Juan Diego Contreras.
 Docente: Ing., Esp., M.Ed. Christian Felipe Duarte.
 
-ConduLog administra una escuela de conducción (CEA) simulada en Bogotá que ofrece los cursos para las licencias
+ConduCar administra una escuela de conducción (CEA) simulada en Bogotá que ofrece los cursos para las licencias
 **A2** (motocicletas), **B1** (carros particulares) y **C1** (carros de servicio público): alumnos, matrículas, pagos,
 clases de teoría, taller y práctica, instructores, vehículos, exámenes y certificados.
 
@@ -13,7 +13,7 @@ clases de teoría, taller y práctica, instructores, vehículos, exámenes y cer
 ```
 ┌──────────────────────────┐   HTTP + JSON   ┌───────────────────────────────────────────┐   JDBC   ┌──────────────┐
 │ Frontend: Angular 20     │ ──────────────▶ │ Backend: Spring Boot 3 (Java 17+)         │ ───────▶ │ MySQL 8      │
-│ (Vista)                  │   /api/...      │ Controller → Service → Repository → Model │          │ base condulog│
+│ (Vista)                  │   /api/...      │ Controller → Service → Repository → Model │          │ base conducar│
 │ http://localhost:4200    │                 │ http://localhost:8080                     │          │ consultor    │
 └──────────────────────────┘                 └───────────────────────────────────────────┘          └──────────────┘
 ```
@@ -75,7 +75,7 @@ $mysql = "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe"
 ### 2. Backend
 
 Abra la carpeta en VS Code, espere a que cargue el proyecto de Java y haga clic en **Run** sobre `main` en
-`backend/src/main/java/co/edu/unbosque/condulog/CondulogApplication.java`.
+`backend/src/main/java/co/edu/unbosque/conducar/ConducarApplication.java`.
 Prueba: <http://localhost:8080/api/estado>
 
 ### 3. Frontend
@@ -92,7 +92,7 @@ Abra <http://localhost:4200>.
 
 ### Conexión a MySQL
 
-Los datos están en `backend/src/main/resources/application.properties` (por defecto `localhost:3306`, base `condulog`,
+Los datos están en `backend/src/main/resources/application.properties` (por defecto `localhost:3306`, base `conducar`,
 usuario `consultor`, contraseña `Consultor_2026`). También se pueden cambiar con las variables de entorno
 `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` y `DB_PASSWORD`.
 

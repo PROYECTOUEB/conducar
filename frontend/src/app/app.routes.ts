@@ -12,7 +12,7 @@ import { PanelComponent } from './features/panel/panel.component';
 import { VehiculoDetalleComponent } from './features/vehiculos/vehiculo-detalle.component';
 import { VehiculosComponent } from './features/vehiculos/vehiculos.component';
 
-const t = (nombre: string) => `${nombre} – ConduLog`;
+const t = (nombre: string) => `${nombre} – ConduCar`;
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'panel' },
