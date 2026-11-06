@@ -1,13 +1,12 @@
 package co.edu.unbosque.conducar.controller;
 
+import co.edu.unbosque.conducar.http.Peticion;
+import co.edu.unbosque.conducar.http.Router;
 import co.edu.unbosque.conducar.model.panel.Panel;
 import co.edu.unbosque.conducar.service.PanelService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/panel")
+import java.sql.SQLException;
+
 public class PanelController {
 
     private final PanelService panelService;
@@ -16,8 +15,12 @@ public class PanelController {
         this.panelService = panelService;
     }
 
-    @GetMapping
-    public Panel panel() {
+    public void registrar(Router router) {
+        router.get("/api/panel", this::panel);
+    }
+
+    /** GET /api/panel */
+    public Panel panel(Peticion p) throws SQLException {
         return panelService.obtenerPanel();
     }
 }

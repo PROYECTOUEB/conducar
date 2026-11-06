@@ -6,12 +6,11 @@ import co.edu.unbosque.conducar.model.alumno.AlumnoDetalle;
 import co.edu.unbosque.conducar.model.alumno.AlumnoResumen;
 import co.edu.unbosque.conducar.repository.AlumnoRepository;
 import co.edu.unbosque.conducar.repository.ClaseRepository;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
-
-@Service
 public class AlumnoService {
 
     private final AlumnoRepository alumnoRepository;
@@ -22,12 +21,13 @@ public class AlumnoService {
         this.claseRepository = claseRepository;
     }
 
-    public List<AlumnoResumen> buscar(String texto) {
+    public List<AlumnoResumen> buscar(String texto) throws SQLException {
         String filtro = (texto == null || texto.isBlank()) ? null : texto.trim();
         return alumnoRepository.buscar(filtro);
     }
 
-    public AlumnoDetalle detalle(int id) {
+    /** Ficha del alumno; la edad se calcula aquí (atributo derivado). */
+    public AlumnoDetalle detalle(int id) throws SQLException {
         AlumnoDatos datos = alumnoRepository.buscarPorId(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("No existe el alumno " + id))
                 .conEdad(LocalDate.now());

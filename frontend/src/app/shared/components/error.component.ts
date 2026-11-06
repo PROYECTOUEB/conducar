@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
     <h1>No fue posible cargar esta sección</h1>
     <div class="error-caja">
       <p>{{ mensaje }}</p>
-      <p>Verifique que MySQL y el backend de Spring Boot estén en ejecución. Consulte el
+      <p>Verifique que MySQL y el backend (Java) estén en ejecución. Consulte el
         <a routerLink="/estado">estado de la conexión</a>.</p>
     </div>`,
 })

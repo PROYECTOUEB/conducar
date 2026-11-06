@@ -55,7 +55,7 @@ export function mensajeError(e: unknown): string {
       return String(e.error.mensaje);
     }
     if (e.status === 0 || e.status === 504 || e.status === 502) {
-      return 'No hay conexión con el backend. Verifique que Spring Boot esté en ejecución en el puerto 8080.';
+      return 'No hay conexión con el backend. Verifique que el backend (Java) esté en ejecución en el puerto 8080.';
     }
     return `Error ${e.status} al consultar ${e.url ?? 'la API'}`;
   }

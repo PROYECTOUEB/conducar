@@ -3,10 +3,9 @@ package co.edu.unbosque.conducar.service;
 import co.edu.unbosque.conducar.model.catalogo.Catalogos;
 import co.edu.unbosque.conducar.repository.InstructorRepository;
 import co.edu.unbosque.conducar.repository.VehiculoRepository;
-import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 
-@Service
 public class CatalogoService {
 
     private final InstructorRepository instructorRepository;
@@ -17,7 +16,8 @@ public class CatalogoService {
         this.vehiculoRepository = vehiculoRepository;
     }
 
-    public Catalogos catalogos() {
+    /** Valores para los filtros de la agenda. */
+    public Catalogos catalogos() throws SQLException {
         return new Catalogos(instructorRepository.opciones(), vehiculoRepository.placas(), ClaseService.TIPOS, ClaseService.ESTADOS);
     }
 }

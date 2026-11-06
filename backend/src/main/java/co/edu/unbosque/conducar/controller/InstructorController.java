@@ -1,14 +1,13 @@
 package co.edu.unbosque.conducar.controller;
 
+import co.edu.unbosque.conducar.http.Peticion;
+import co.edu.unbosque.conducar.http.Router;
 import co.edu.unbosque.conducar.model.instructor.InstructorResumen;
 import co.edu.unbosque.conducar.service.InstructorService;
-import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/instructores")
+import java.sql.SQLException;
+import java.util.List;
+
 public class InstructorController {
 
     private final InstructorService instructorService;
@@ -17,8 +16,12 @@ public class InstructorController {
         this.instructorService = instructorService;
     }
 
-    @GetMapping
-    public List<InstructorResumen> listar() {
+    public void registrar(Router router) {
+        router.get("/api/instructores", this::listar);
+    }
+
+    /** GET /api/instructores */
+    public List<InstructorResumen> listar(Peticion p) throws SQLException {
         return instructorService.listar();
     }
 }

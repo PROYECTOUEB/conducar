@@ -3,11 +3,10 @@ package co.edu.unbosque.conducar.service;
 import co.edu.unbosque.conducar.exception.SolicitudInvalidaException;
 import co.edu.unbosque.conducar.model.matricula.MatriculaResumen;
 import co.edu.unbosque.conducar.repository.MatriculaRepository;
+
+import java.sql.SQLException;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
-
-@Service
 public class MatriculaService {
 
     public static final List<String> ESTADOS = List.of("ACTIVA", "FINALIZADA", "CANCELADA");
@@ -18,7 +17,7 @@ public class MatriculaService {
         this.matriculaRepository = matriculaRepository;
     }
 
-    public List<MatriculaResumen> listar(String estado) {
+    public List<MatriculaResumen> listar(String estado) throws SQLException {
         if (estado == null || estado.isBlank()) {
             return matriculaRepository.listar(null);
         }

@@ -3,11 +3,10 @@ package co.edu.unbosque.conducar.service;
 import co.edu.unbosque.conducar.model.panel.Panel;
 import co.edu.unbosque.conducar.repository.ClaseRepository;
 import co.edu.unbosque.conducar.repository.PanelRepository;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
-import org.springframework.stereotype.Service;
 
-
-@Service
 public class PanelService {
 
     private final PanelRepository panelRepository;
@@ -18,7 +17,7 @@ public class PanelService {
         this.claseRepository = claseRepository;
     }
 
-    public Panel obtenerPanel() {
+    public Panel obtenerPanel() throws SQLException {
         LocalDate hoy = LocalDate.now();
         return new Panel(
                 panelRepository.indicadores(),

@@ -1,16 +1,14 @@
 package co.edu.unbosque.conducar.controller;
 
+import co.edu.unbosque.conducar.http.Peticion;
+import co.edu.unbosque.conducar.http.Router;
 import co.edu.unbosque.conducar.model.consulta.ConsultaItem;
 import co.edu.unbosque.conducar.model.consulta.ConsultaResultado;
 import co.edu.unbosque.conducar.service.ConsultaService;
-import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/consultas")
+import java.sql.SQLException;
+import java.util.List;
+
 public class ConsultaController {
 
     private final ConsultaService consultaService;
@@ -19,13 +17,18 @@ public class ConsultaController {
         this.consultaService = consultaService;
     }
 
-    @GetMapping
-    public List<ConsultaItem> catalogo() {
+    public void registrar(Router router) {
+        router.get("/api/consultas", this::catalogo)
+              .get("/api/consultas/{n}", this::ejecutar);
+    }
+
+    /** GET /api/consultas */
+    public List<ConsultaItem> catalogo(Peticion p) {
         return consultaService.catalogo();
     }
 
-    @GetMapping("/{n}")
-    public ConsultaResultado ejecutar(@PathVariable int n) {
-        return consultaService.ejecutar(n);
+    /** GET /api/consultas/{n}: ejecuta la consulta n en MySQL */
+    public ConsultaResultado ejecutar(Peticion p) throws SQLException {
+        return consultaService.ejecutar(p.rutaEntero("n"));
     }
 }

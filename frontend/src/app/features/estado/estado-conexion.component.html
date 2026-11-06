@@ -4,8 +4,8 @@
   <div class="error-caja">
     <p><strong>La aplicación no puede conectarse a la base de datos.</strong></p>
     <p><code>{{ error }}</code></p>
-    <p>Revise que el servicio de MySQL esté activo, que el backend de Spring Boot esté en ejecución en el puerto 8080
-      y que el usuario y la contraseña de application.properties sean correctos.</p>
+    <p>Revise que el servicio de MySQL esté activo, que el backend (Java) esté en ejecución en el puerto 8080
+      y que el usuario y la contraseña de backend/src/main/resources/config.properties sean correctos.</p>
   </div>
 } @else if (!estado) {
   <p class="cargando" role="status">Verificando la conexión…</p>

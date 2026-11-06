@@ -1,32 +1,40 @@
 package co.edu.unbosque.conducar.service;
 
 import co.edu.unbosque.conducar.exception.RecursoNoEncontradoException;
+import co.edu.unbosque.conducar.http.Json;
 import co.edu.unbosque.conducar.model.consulta.ConsultaDefinicion;
 import co.edu.unbosque.conducar.model.consulta.ConsultaItem;
 import co.edu.unbosque.conducar.model.consulta.ConsultaResultado;
 import co.edu.unbosque.conducar.model.consulta.ResultadoTabla;
 import co.edu.unbosque.conducar.repository.ConsultaRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
+import java.util.Map;
 
-
-@Service
 public class ConsultaService {
 
     private final ConsultaRepository consultaRepository;
-    private final List<ConsultaDefinicion> consultas;
+    private final List<ConsultaDefinicion> consultas = new ArrayList<>();
 
-    public ConsultaService(ConsultaRepository consultaRepository, ObjectMapper mapper) {
+    /** Carga las consultas de consultas.json (carpeta resources) al iniciar. */
+    public ConsultaService(ConsultaRepository consultaRepository) {
         this.consultaRepository = consultaRepository;
-        try (InputStream in = new ClassPathResource("consultas.json").getInputStream()) {
-            this.consultas = mapper.readValue(in, new TypeReference<List<ConsultaDefinicion>>() { });
+        try (InputStream in = ConsultaService.class.getClassLoader().getResourceAsStream("consultas.json")) {
+            if (in == null) {
+                throw new IllegalStateException("No se encontró consultas.json en src/main/resources");
+            }
+            List<?> lista = (List<?>) Json.leer(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+            for (Object o : lista) {
+                Map<?, ?> c = (Map<?, ?>) o;
+                consultas.add(new ConsultaDefinicion((String) c.get("cat"), (String) c.get("q"),
+                        (String) c.get("sql"), (String) c.get("exp")));
+            }
         } catch (IOException e) {
             throw new UncheckedIOException("No se pudo leer consultas.json", e);
         }
@@ -41,7 +49,7 @@ public class ConsultaService {
         return items;
     }
 
-    public ConsultaResultado ejecutar(int n) {
+    public ConsultaResultado ejecutar(int n) throws SQLException {
         if (n < 1 || n > consultas.size()) {
             throw new RecursoNoEncontradoException("No existe la consulta " + n);
         }

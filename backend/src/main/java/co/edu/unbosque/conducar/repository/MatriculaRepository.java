@@ -1,30 +1,21 @@
 package co.edu.unbosque.conducar.repository;
 
 import co.edu.unbosque.conducar.model.matricula.MatriculaResumen;
+
+import java.sql.SQLException;
 import java.util.List;
-import org.springframework.jdbc.core.DataClassRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
+/** Consultas de MATRICULA con lo pagado, el saldo y las horas. */
+public class MatriculaRepository extends RepositorioBase {
 
-@Repository
-public class MatriculaRepository {
-
-    private final NamedParameterJdbcTemplate jdbc;
-
-    public MatriculaRepository(NamedParameterJdbcTemplate jdbc) {
-        this.jdbc = jdbc;
+    public MatriculaRepository(ConexionBD conexionBD) {
+        super(conexionBD);
     }
 
-    
-    public List<MatriculaResumen> listar(String estado) {
-        MapSqlParameterSource p = new MapSqlParameterSource();
-        String where = "";
-        if (estado != null) {
-            where = "WHERE m.estado = :estado\n";
-            p.addValue("estado", estado);
-        }
+    /** Matrículas; si llega un estado, filtra por él. El saldo se calcula, no se guarda. */
+    public List<MatriculaResumen> listar(String estado) throws SQLException {
+        String where = estado == null ? "" : "WHERE m.estado = ?\n";
+        Object[] parametros = estado == null ? new Object[] {} : new Object[] {estado};
         String sql = """
                 SELECT m.id_matricula, a.id_alumno, CONCAT(a.nombres, ' ', a.apellidos) AS alumno, m.codigo_categoria,
                        m.fecha_matricula, m.estado, m.valor_pactado,
@@ -37,6 +28,10 @@ public class MatriculaRepository {
                 FROM matricula m
                 JOIN alumno a ON a.id_alumno = m.id_alumno
                 """ + where + "ORDER BY m.id_matricula";
-        return jdbc.query(sql, p, new DataClassRowMapper<>(MatriculaResumen.class));
+        return consultar(sql, rs -> new MatriculaResumen(
+                entero(rs, "id_matricula"), entero(rs, "id_alumno"), rs.getString("alumno"),
+                rs.getString("codigo_categoria"), fecha(rs, "fecha_matricula"), rs.getString("estado"),
+                decimal(rs, "valor_pactado"), decimal(rs, "total_pagado"), decimal(rs, "saldo"),
+                entero(rs, "horas_dictadas"), entero(rs, "horas_plan")), parametros);
     }
 }

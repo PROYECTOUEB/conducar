@@ -4,14 +4,13 @@ import co.edu.unbosque.conducar.exception.SolicitudInvalidaException;
 import co.edu.unbosque.conducar.model.clase.ClaseResumen;
 import co.edu.unbosque.conducar.model.clase.FiltroClases;
 import co.edu.unbosque.conducar.repository.ClaseRepository;
+
+import java.sql.SQLException;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
-
-@Service
 public class ClaseService {
 
-    
+    /** Valores permitidos (los mismos CHECK de la base de datos). */
     public static final List<String> TIPOS = List.of("TEORIA", "TALLER", "PRACTICA");
     public static final List<String> ESTADOS = List.of("PROGRAMADA", "DICTADA", "CANCELADA");
 
@@ -21,7 +20,8 @@ public class ClaseService {
         this.claseRepository = claseRepository;
     }
 
-    public List<ClaseResumen> buscar(FiltroClases filtro) {
+    /** Valida los filtros antes de consultar. */
+    public List<ClaseResumen> buscar(FiltroClases filtro) throws SQLException {
         if (filtro.estado() != null && !ESTADOS.contains(filtro.estado())) {
             throw new SolicitudInvalidaException("Estado de clase no válido: " + filtro.estado());
         }

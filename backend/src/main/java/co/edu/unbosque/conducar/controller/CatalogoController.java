@@ -1,13 +1,12 @@
 package co.edu.unbosque.conducar.controller;
 
+import co.edu.unbosque.conducar.http.Peticion;
+import co.edu.unbosque.conducar.http.Router;
 import co.edu.unbosque.conducar.model.catalogo.Catalogos;
 import co.edu.unbosque.conducar.service.CatalogoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/catalogos")
+import java.sql.SQLException;
+
 public class CatalogoController {
 
     private final CatalogoService catalogoService;
@@ -16,8 +15,12 @@ public class CatalogoController {
         this.catalogoService = catalogoService;
     }
 
-    @GetMapping
-    public Catalogos catalogos() {
+    public void registrar(Router router) {
+        router.get("/api/catalogos", this::catalogos);
+    }
+
+    /** GET /api/catalogos */
+    public Catalogos catalogos(Peticion p) throws SQLException {
         return catalogoService.catalogos();
     }
 }

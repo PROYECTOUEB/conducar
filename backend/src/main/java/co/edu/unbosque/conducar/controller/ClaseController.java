@@ -1,18 +1,14 @@
 package co.edu.unbosque.conducar.controller;
 
+import co.edu.unbosque.conducar.http.Peticion;
+import co.edu.unbosque.conducar.http.Router;
 import co.edu.unbosque.conducar.model.clase.ClaseResumen;
 import co.edu.unbosque.conducar.model.clase.FiltroClases;
 import co.edu.unbosque.conducar.service.ClaseService;
-import java.time.LocalDate;
-import java.util.List;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/clases")
+import java.sql.SQLException;
+import java.util.List;
+
 public class ClaseController {
 
     private final ClaseService claseService;
@@ -21,19 +17,14 @@ public class ClaseController {
         this.claseService = claseService;
     }
 
-    /** GET /api/clases?estado=&tipo=&instructor=&placa=&desde=AAAA-MM-DD&hasta=AAAA-MM-DD */
-    @GetMapping
-    public List<ClaseResumen> listar(
-            @RequestParam(required = false) String estado,
-            @RequestParam(required = false) String tipo,
-            @RequestParam(required = false) Integer instructor,
-            @RequestParam(required = false) String placa,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta) {
-        return claseService.buscar(new FiltroClases(vacioANulo(estado), vacioANulo(tipo), instructor, vacioANulo(placa), desde, hasta));
+    public void registrar(Router router) {
+        router.get("/api/clases", this::listar);
     }
 
-    private static String vacioANulo(String valor) {
-        return (valor == null || valor.isBlank()) ? null : valor.trim();
+    /** GET /api/clases?estado=&tipo=&instructor=&placa=&desde=AAAA-MM-DD&hasta=AAAA-MM-DD */
+    public List<ClaseResumen> listar(Peticion p) throws SQLException {
+        FiltroClases filtro = new FiltroClases(p.texto("estado"), p.texto("tipo"), p.entero("instructor"),
+                p.texto("placa"), p.fecha("desde"), p.fecha("hasta"));
+        return claseService.buscar(filtro);
     }
 }

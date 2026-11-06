@@ -3,7 +3,7 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Backend ConduCar (Spring Boot)",
+      "name": "Backend ConduCar (Java)",
       "request": "launch",
       "mainClass": "co.edu.unbosque.conducar.ConducarApplication",
       "projectName": "conducar"

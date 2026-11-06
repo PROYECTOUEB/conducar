@@ -1,13 +1,12 @@
 package co.edu.unbosque.conducar.controller;
 
+import co.edu.unbosque.conducar.http.Peticion;
+import co.edu.unbosque.conducar.http.Router;
 import co.edu.unbosque.conducar.model.estado.EstadoConexion;
 import co.edu.unbosque.conducar.service.EstadoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/estado")
+import java.sql.SQLException;
+
 public class EstadoController {
 
     private final EstadoService estadoService;
@@ -16,8 +15,12 @@ public class EstadoController {
         this.estadoService = estadoService;
     }
 
-    @GetMapping
-    public EstadoConexion estado() {
+    public void registrar(Router router) {
+        router.get("/api/estado", this::estado);
+    }
+
+    /** GET /api/estado: comprueba la conexión con MySQL */
+    public EstadoConexion estado(Peticion p) throws SQLException {
         return estadoService.estado();
     }
 }

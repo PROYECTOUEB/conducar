@@ -2,23 +2,18 @@ package co.edu.unbosque.conducar.repository;
 
 import co.edu.unbosque.conducar.model.categoria.Categoria;
 import co.edu.unbosque.conducar.model.categoria.ModuloPlan;
+
+import java.sql.SQLException;
 import java.util.List;
-import org.springframework.jdbc.core.DataClassRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
+/** Consultas de CATEGORIA_LICENCIA y de su plan de curso (PLAN_CURSO + MODULO). */
+public class CategoriaRepository extends RepositorioBase {
 
-@Repository
-public class CategoriaRepository {
-
-    private final NamedParameterJdbcTemplate jdbc;
-
-    public CategoriaRepository(NamedParameterJdbcTemplate jdbc) {
-        this.jdbc = jdbc;
+    public CategoriaRepository(ConexionBD conexionBD) {
+        super(conexionBD);
     }
 
-    public List<Categoria> categorias() {
+    public List<Categoria> categorias() throws SQLException {
         String sql = """
                 SELECT c.codigo_categoria, c.descripcion, c.tipo_servicio, c.edad_minima, c.valor_curso,
                        (SELECT COALESCE(SUM(p.horas), 0) FROM plan_curso p
@@ -29,25 +24,21 @@ public class CategoriaRepository {
                 FROM categoria_licencia c
                 ORDER BY c.codigo_categoria
                 """;
-        
-        return jdbc.query(sql, new MapSqlParameterSource(), (rs, fila) -> new Categoria(
+        return consultar(sql, rs -> new Categoria(
                 rs.getString("codigo_categoria"), rs.getString("descripcion"), rs.getString("tipo_servicio"),
-                rs.getInt("edad_minima"), valorODefecto(rs.getBigDecimal("valor_curso")), rs.getInt("horas_totales"),
-                rs.getInt("matriculas_activas"), rs.getInt("matriculas"), List.of()));
+                entero(rs, "edad_minima"), decimal(rs, "valor_curso"), entero(rs, "horas_totales"),
+                entero(rs, "matriculas_activas"), entero(rs, "matriculas"), List.of()));
     }
 
-    
-    private static Double valorODefecto(java.math.BigDecimal valor) {
-        return valor == null ? null : valor.doubleValue();
-    }
-
-    public List<ModuloPlan> plan() {
+    public List<ModuloPlan> plan() throws SQLException {
         String sql = """
                 SELECT p.codigo_categoria, md.id_modulo, md.nombre, md.tipo, md.descripcion, p.horas
                 FROM plan_curso p
                 JOIN modulo md ON md.id_modulo = p.id_modulo
                 ORDER BY p.codigo_categoria, md.id_modulo
                 """;
-        return jdbc.query(sql, new MapSqlParameterSource(), new DataClassRowMapper<>(ModuloPlan.class));
+        return consultar(sql, rs -> new ModuloPlan(
+                rs.getString("codigo_categoria"), entero(rs, "id_modulo"), rs.getString("nombre"),
+                rs.getString("tipo"), rs.getString("descripcion"), entero(rs, "horas")));
     }
 }
